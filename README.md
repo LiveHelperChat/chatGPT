@@ -1,2 +1,10 @@
-# chatGPT
-ChatGPT Assistant support directly in Live Helper Chat
+# ChatGPT assistant workflow model support
+
+With this extension you won't need to pay anything to third party except OpenAI for contextual search based on your personal data.
+
+Requirements
+
+* Min 4.48v Live Helper Chat version.
+* At the moment Polling workflow is supported only.
+
+Video tutorial under way.
