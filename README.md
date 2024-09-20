@@ -8,3 +8,8 @@ Requirements
 * At the moment Polling workflow is supported only.
 
 Video tutorial under way.
+
+
+# ChatGPT Completion workflow model support
+
+Please refer to this manual https://doc.livehelperchat.com/docs/bot/chatgpt-integration 
