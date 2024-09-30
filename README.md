@@ -6,6 +6,7 @@ With this extension you won't need to pay anything to third party except OpenAI 
 
 * Min 4.48v Live Helper Chat version.
 * At the moment Polling workflow is supported only.
+* Account at https://platform.openai.com/docs/overview
 
 ## Install
 
