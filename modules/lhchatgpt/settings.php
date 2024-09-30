@@ -30,9 +30,12 @@ if (isset($_POST['RemoveRestAPI'])) {
 
 $Result['content'] = $tpl->fetch();
 $Result['path'] = array(
+    array (
+        'url' =>erLhcoreClassDesign::baseurl('chatgpt/index'),
+        'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','ChatGPT')
+    ),
     array(
-        'url' => erLhcoreClassDesign::baseurl('zapier/settings'),
-        'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('messagebird/module','ChatGPT settings')
+        'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','ChatGPT settings')
     )
 );
 
