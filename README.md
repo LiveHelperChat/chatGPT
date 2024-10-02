@@ -61,7 +61,7 @@ Have `Automatically suggest answers based on visitor messages`
 
 ## Setup video tutorial
 
-Video tutorial under way.
+Video tutorial and use case - https://youtu.be/X9W99obVj8Q
 
 # ChatGPT Completion workflow model support
 
