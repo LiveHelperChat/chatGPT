@@ -8,6 +8,11 @@ With this extension you won't need to pay anything to third party except OpenAI 
 * At the moment Polling workflow is supported only.
 * Account at https://platform.openai.com/docs/overview
 
+## How to make UI snappy by delegating Rest API calls to background workers?
+
+* Install https://github.com/LiveHelperChat/lhc-php-resque
+* Modify Bot triggers and where you see `Rest APi` call response check `Send Rest API Call in the background if we are not already in it`.
+
 ## Install
 
 After clone or download put it under
