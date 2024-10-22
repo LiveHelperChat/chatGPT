@@ -7,7 +7,6 @@ class ChatGPTLiveHelperChatActivator {
     // Remove SMS
     public static function remove()
     {
-
         if ($restAPI = \erLhcoreClassModelGenericBotRestAPI::findOne(['filter' => ['name' => 'ChatGPTAssistant']])) {
             $restAPI->removeThis();
         }
@@ -43,46 +42,17 @@ class ChatGPTLiveHelperChatActivator {
         $botData['bot']->name = 'ChatGPTAssistant';
         $botData['bot']->updateThis(['update' => ['name']]);
 
-        // Send Question Trigger
-        $trigger = $botData['triggers'][1];
-        $actions = $trigger->actions_front;
-        $actions[0]['content']['rest_api'] = $restAPI->id;
-        $trigger->actions_front = $actions;
-        $trigger->actions = json_encode($actions);
-        $trigger->updateThis(['update' => ['actions']]);
-
-        // New thread
-        $trigger = $botData['triggers'][2];
-        $actions = $trigger->actions_front;
-        $actions[0]['content']['rest_api'] = $restAPI->id;
-        $trigger->actions_front = $actions;
-        $trigger->actions = json_encode($actions);
-        $trigger->updateThis(['update' => ['actions']]);
-
-        // Wait job completion
-        $trigger = $botData['triggers'][5];
-        $actions = $trigger->actions_front;
-        $actions[1]['content']['rest_api'] = $restAPI->id;
-        $trigger->actions_front = $actions;
-        $trigger->actions = json_encode($actions);
-        $trigger->updateThis(['update' => ['actions']]);
-
-        // Retrieve response
-        $trigger = $botData['triggers'][7];
-        $actions = $trigger->actions_front;
-        $actions[0]['content']['rest_api'] = $restAPI->id;
-        $trigger->actions_front = $actions;
-        $trigger->actions = json_encode($actions);
-        $trigger->updateThis(['update' => ['actions']]);
-
-        // Requires actions
-        $trigger = $botData['triggers'][8];
-        $actions = $trigger->actions_front;
-        $actions[2]['content']['rest_api'] = $restAPI->id;
-        $trigger->actions_front = $actions;
-        $trigger->actions = json_encode($actions);
-        $trigger->updateThis(['update' => ['actions']]);
-
+        foreach ($botData['triggers'] as $trigger) {
+            $actions = $trigger->actions_front;
+            foreach ($actions as $indexAction  => $action) {
+                if (isset($actions[$indexAction]['content']['rest_api']) && is_numeric($actions[$indexAction]['content']['rest_api'])) {
+                    $actions[$indexAction]['content']['rest_api'] = $restAPI->id;
+                }
+            }
+            $trigger->actions_front = $actions;
+            $trigger->actions = json_encode($actions);
+            $trigger->updateThis(['update' => ['actions']]);
+        }
     }
 }
 

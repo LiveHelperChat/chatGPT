@@ -2,9 +2,22 @@
 
 With this extension you won't need to pay anything to third party except OpenAI for contextual search based on your personal data.
 
+### Present release
+
+Updates
+
+* Multiple tools call support. `ScheduleRun` Rest API call will use `"parallel_tool_calls": false,` argument
+* Bot now has example how to have multiple tools calls with arguments
+
+Make sure you have most recent Rest API and Bot versions also version with this commit https://github.com/LiveHelperChat/livehelperchat/commit/6e9ecaa573902adc082204799fec98f7796d81d9
+
+### V1.0
+
+Initial release
+
 ## Requirements
 
-* Min 4.48v Live Helper Chat version.
+* Min 4.51v Live Helper Chat version.
 * At the moment Polling workflow is supported only.
 * Account at https://platform.openai.com/docs/overview
 
@@ -71,3 +84,5 @@ Video tutorial and use case - https://youtu.be/X9W99obVj8Q
 # ChatGPT Completion workflow model support
 
 Please refer to this manual https://doc.livehelperchat.com/docs/bot/chatgpt-integration 
+
+# Screenshots
