@@ -2,7 +2,13 @@
 
 With this extension you won't need to pay anything to third party except OpenAI for contextual search based on your personal data.
 
+
 ### Present release
+
+* Added support for empty first visitor message on chat start. Rest API call now uses `{not_emtpy_*` feature.
+* Meta data for a Run is stored within chat, because there can be no message during run. E.g first run on chat start
+
+### v1.1
 
 Updates
 

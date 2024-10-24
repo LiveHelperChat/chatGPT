@@ -134,7 +134,7 @@ class ChatGPTLiveHelperChatValidator {
                     $restAPI->configuration_array['parameters'][$key]['suburl'] = str_replace(
                         [
                         '{{args.chat.chat_variables_array.chatgpt_thread_id}}',
-                        '{{args.msg.meta_msg_array.chatgpt_run_id}}'
+                        '{{args.chat.chat_variables_array.chatgpt_run_id}}'
                         ],
                         [
                             $thread_id,
@@ -210,7 +210,7 @@ class ChatGPTLiveHelperChatValidator {
                     $restAPI->configuration_array['parameters'][$key]['suburl'] = str_replace(
                         [
                             '{{args.chat.chat_variables_array.chatgpt_thread_id}}',
-                            '{{args.msg.meta_msg_array.chatgpt_run_id}}'
+                            '{{args.chat.chat_variables_array.chatgpt_run_id}}'
                         ],
                         [
                             $thread_id,
