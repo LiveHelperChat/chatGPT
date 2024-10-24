@@ -92,3 +92,68 @@ Video tutorial and use case - https://youtu.be/X9W99obVj8Q
 Please refer to this manual https://doc.livehelperchat.com/docs/bot/chatgpt-integration 
 
 # Screenshots
+
+## Multiple tool calls
+
+### Update phone number.
+
+Phone number can be evening and morning as an example.
+
+Chat GPT function definition
+```json
+{
+  "name": "post-update-phone-number",
+  "description": "Updates the phone number for a player.",
+  "strict": true,
+  "parameters": {
+    "type": "object",
+    "required": [
+      "phone",
+      "type"
+    ],
+    "properties": {
+      "type": {
+        "type": "string",
+        "description": "The type of phone number (e.g., 'morning','evening').",
+        "enum": [
+          "evening_phone",
+          "morning_phone"
+        ]
+      },
+      "phone": {
+        "type": "string",
+        "description": "The new phone number to be updated."
+      }
+    },
+    "additionalProperties": false
+  }
+}
+```
+
+Live Helper Chat
+
+![image](https://github.com/user-attachments/assets/8839d268-f15b-4101-bb95-7460dd8a8c13)
+
+### Retrieve withdrawal list for the visitor
+
+Chat GPT function definition
+
+```json
+{
+  "name": "get_withdrawals",
+  "description": "Retrieves a list of withdrawals for a visitor.",
+  "strict": true,
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "properties": {},
+    "additionalProperties": false
+  }
+}
+```
+
+Live Helper Chat side. You can also as visitor can ask to return only last 3 items.
+
+![image](https://github.com/user-attachments/assets/c109ca7e-14cc-456e-be65-80c2e18bdef3)
+
+
