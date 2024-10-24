@@ -7,6 +7,9 @@ With this extension you won't need to pay anything to third party except OpenAI 
 
 * Added support for empty first visitor message on chat start. Rest API call now uses `{not_emtpy_*` feature.
 * Meta data for a Run is stored within chat, because there can be no message during run. E.g first run on chat start
+    * Because of this chat `Bot` and `Rest API` calls were modified.
+
+Required version since this - https://github.com/LiveHelperChat/livehelperchat/commit/5b2f0b25404dfe8bf56a15d5031086de3622c496
 
 ### v1.1
 
@@ -68,6 +71,22 @@ Under left Modules you will find `ChatGPT` click it.
  * Now just paste `Project API Key` and `Assistant ID` from https://platform.openai.com and click `Create/Update Rest API/Bot`
 
 Now you can just assign newly created bot to your department or modify bot to the way you want.
+
+#### How to avoid bot calling functions if visitor is not logged in?
+
+In a `ScheduleRun` Rest API call you can have something like `{is_empty__args.chat.chat_variables_array.is_logged}` which checks that chat variable is set.
+
+```
+{
+    "assistant_id": "asst_UAJYImd9WyXlRGNOa0bcTAgD",
+     "parallel_tool_calls": false
+     {is_empty__args.chat.chat_variables_array.is_logged}
+        ,"tools":[]
+        , "additional_instructions":"Visitor is not logged in and functions calls are not enable to him. You can answer questions only from documentation. Ask him to login to get personal account information. You can get personal information once visitor is logged in."
+     {/is_empty}
+     {not_empty__msg_url},"additional_messages" : [{"role" : "user", "content" :  {{msg_url}} }]{/not_empty}
+}
+```
 
 ### Setup pas reply predictor for the agents
 
