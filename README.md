@@ -29,7 +29,6 @@ Initial release
 * Min 4.51v Live Helper Chat version.
 * At the moment Polling workflow is supported only.
 * Account at https://platform.openai.com/docs/overview
-* Webhooks has to be enabled - https://github.com/LiveHelperChat/livehelperchat/blob/master/lhc_web/settings/settings.ini.default.php#L86
 
 ## How to make UI snappy by delegating Rest API calls to background workers?
 
