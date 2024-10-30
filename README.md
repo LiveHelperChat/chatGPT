@@ -2,6 +2,16 @@
 
 With this extension you won't need to pay anything to third party except OpenAI for contextual search based on your personal data.
 
+### Demo
+
+You can see ChatGPT chat running on https://doc.livehelperchat.com/ it can answer questions only realted to Live Helper Chat documentation.
+
+How it works?
+
+* Account at https://platform.openai.com is created
+* Background worker is used https://github.com/LiveHelperChat/lhc-php-resque
+* Vector store is created and attached to assistant
+* To vector store files from https://github.com/LiveHelperChat/doc were uploaded
 
 ### Present release
 
