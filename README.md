@@ -39,6 +39,7 @@ Initial release
 * Min 4.51v Live Helper Chat version.
 * At the moment Polling workflow is supported only.
 * Account at https://platform.openai.com/docs/overview
+* `System configuration -> Live Help Configuration -> Chat configuration -> Misc` Make sure you unheck `Reopen chat functionality enabled` and `Allow user to reopen closed chats?`. This is required because if chat is reopened we can be in the middle of previous task.
 
 ## How to make UI snappy by delegating Rest API calls to background workers?
 
