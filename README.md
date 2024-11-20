@@ -1,6 +1,17 @@
 # ChatGPT assistant workflow model support
 
-With this extension you won't need to pay anything to third party except OpenAI for contextual search based on your personal data.
+With this extension you won't need to pay anything to third party except OpenAI for contextual search based on your personal data. Streaming is also supported!
+
+### Demo
+
+You can see ChatGPT chat running on https://doc.livehelperchat.com/ it can answer questions only related to Live Helper Chat documentation.
+
+How it works?
+
+* Account at https://platform.openai.com is created
+* Background worker is used https://github.com/LiveHelperChat/lhc-php-resque
+* Vector store is created and attached to assistant
+* To vector store files from https://github.com/LiveHelperChat/doc were uploaded
 
 ### Present release
 
@@ -40,6 +51,7 @@ Initial release
 * Min 4.51v Live Helper Chat version.
 * At the moment Polling workflow is supported only.
 * Account at https://platform.openai.com/docs/overview
+* `System configuration -> Live Help Configuration -> Chat configuration -> Misc` Make sure you unheck `Reopen chat functionality enabled` and `Allow user to reopen closed chats?`. This is required because if chat is reopened we can be in the middle of previous task.
 
 ## How to make UI snappy by delegating Rest API calls to background workers?
 
