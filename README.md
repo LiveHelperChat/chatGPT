@@ -2,8 +2,19 @@
 
 With this extension you won't need to pay anything to third party except OpenAI for contextual search based on your personal data.
 
-
 ### Present release
+
+* Now you can use streaming workflow. For streaming to work you have to have those extensions up and running. 
+* NodeJS (https://github.com/LiveHelperChat/NodeJS-Helper)
+* PHP-Resque (https://github.com/LiveHelperChat/lhc-php-resque)
+* Most recent versions of Live Helper Chat and NodeJS is required
+  * https://github.com/LiveHelperChat/livehelperchat/commit/dfcb0597179d961eef1b922093db5f7679475511
+  * https://github.com/LiveHelperChat/NodeJS-Helper/commit/582a273acb1222e7bde6f50e2bfd58079c74b85d
+ * Bot and Rest API json files you will find here https://github.com/LiveHelperChat/chatGPT/tree/main/doc/assistant_stream 
+   * Import first Rest API after that import bot and choose just imported Rest API 
+   * Remember to change where you see `{CHAT_GPT_TOKEN}` and `{CHATGPT_ASSISTANT_ID}`
+
+### v1.2
 
 * Added support for empty first visitor message on chat start. Rest API call now uses `{not_emtpy_*` feature.
 * Meta data for a Run is stored within chat, because there can be no message during run. E.g first run on chat start
