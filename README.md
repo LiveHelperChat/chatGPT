@@ -18,12 +18,17 @@ How it works?
 * Now you can use streaming workflow. For streaming to work you have to have those extensions up and running. 
 * NodeJS (https://github.com/LiveHelperChat/NodeJS-Helper)
 * PHP-Resque (https://github.com/LiveHelperChat/lhc-php-resque)
+* Before sending Rest API call in your bot make sure. Last message is a `Send typing` message. We use typing message indicator and fill its content with streaming content.
 * Most recent versions of Live Helper Chat and NodeJS is required
   * https://github.com/LiveHelperChat/livehelperchat/commit/dfcb0597179d961eef1b922093db5f7679475511
   * https://github.com/LiveHelperChat/NodeJS-Helper/commit/582a273acb1222e7bde6f50e2bfd58079c74b85d
  * Bot and Rest API json files you will find here https://github.com/LiveHelperChat/chatGPT/tree/main/doc/assistant_stream 
    * Import first Rest API after that import bot and choose just imported Rest API 
    * Remember to change where you see `{CHAT_GPT_TOKEN}` and `{CHATGPT_ASSISTANT_ID}`
+
+Documentation section regarding how streaming works
+
+https://doc.livehelperchat.com/docs/bot/rest-api#streaming
 
 ### v1.2
 
