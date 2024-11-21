@@ -1,4 +1,4 @@
-Here is sample functions for ChatGPT
+Here is sample functions for ChatGPT sample bot is using. They have to be defined in assistant settings.
 
 # paid_support_price
 
