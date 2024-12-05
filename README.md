@@ -177,6 +177,22 @@ Chat GPT function definition
 }
 ```
 
+Accessing function call arguments in the bot triggers.
+
+```
+{args.chat.chat_variables_array.chatgpt_action_args.phone}
+{args.chat.chat_variables_array.chatgpt_action_args.type}
+```
+
+Accessing function call arguments in the Rest API
+
+```
+{
+    "phone":  {{args.chat.chat_variables_array.chatgpt_action_args.phone}},
+    "type":{{args.chat.chat_variables_array.chatgpt_action_args.type}}
+}
+```
+
 Live Helper Chat
 
 ![image](https://github.com/user-attachments/assets/8839d268-f15b-4101-bb95-7460dd8a8c13)
