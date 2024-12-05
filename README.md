@@ -4,7 +4,9 @@ With this extension you won't need to pay anything to third party except OpenAI 
 
 ### Demo
 
-You can see ChatGPT chat running on https://doc.livehelperchat.com/ it can answer questions only related to Live Helper Chat documentation.
+You can see ChatGPT chat running on https://doc.livehelperchat.com/ it can answer questions only related to Live Helper Chat documentation. This demo is without streaming.
+
+For streaming demo look at https://youtu.be/9clxMjnrGsM
 
 How it works?
 
@@ -12,6 +14,7 @@ How it works?
 * Background worker is used https://github.com/LiveHelperChat/lhc-php-resque
 * Vector store is created and attached to assistant
 * To vector store files from https://github.com/LiveHelperChat/doc were uploaded
+
 
 ### Present release
 
