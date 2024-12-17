@@ -4,7 +4,9 @@ With this extension you won't need to pay anything to third party except OpenAI 
 
 ### Demo
 
-You can see ChatGPT chat running on https://doc.livehelperchat.com/ it can answer questions only related to Live Helper Chat documentation. This demo is without streaming.
+You can see ChatGPT chat running on https://doc.livehelperchat.com/ it can answer questions only related to Live Helper Chat documentation. Demo also supports streaming.
+
+We are using for this demo https://livehelperchat.com/order/now if you want easily setup your own bot.
 
 For streaming demo look at https://youtu.be/9clxMjnrGsM
 
