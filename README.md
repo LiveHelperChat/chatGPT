@@ -8,7 +8,8 @@ You can see ChatGPT chat running on https://doc.livehelperchat.com/ it can answe
 
 We are using for this demo https://livehelperchat.com/order/now if you want easily setup your own bot.
 
-For streaming demo look at https://youtu.be/9clxMjnrGsM
+* For streaming demo look at https://youtu.be/9clxMjnrGsM
+* For setup from scratch without extension, look at https://youtu.be/SEsOjmoKdrI
 
 How it works?
 
