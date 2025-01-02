@@ -2,6 +2,15 @@
 
 With this extension you won't need to pay anything to third party except OpenAI for contextual search based on your personal data. Streaming is also supported!
 
+## Requirements
+
+* Min 4.55v Live Helper Chat version.
+* Polling/Streaming workflow is supported only.
+* Account at https://platform.openai.com/docs/overview
+* `System configuration -> Live Help Configuration -> Chat configuration -> Misc` Make sure you unheck `Reopen chat functionality enabled` and `Allow user to reopen closed chats?`. This is required because if chat is reopened we can be in the middle of previous task.
+* `gpt-4o-mini` Model is used.
+* The Account is funded with 5$. Sometimes there were reports that some users were getting `404` during API calls.
+
 ### Demo
 
 You can see ChatGPT chat running on https://doc.livehelperchat.com/ it can answer questions only related to Live Helper Chat documentation. Demo also supports streaming.
@@ -17,7 +26,6 @@ How it works?
 * Background worker is used https://github.com/LiveHelperChat/lhc-php-resque
 * Vector store is created and attached to assistant
 * To vector store files from https://github.com/LiveHelperChat/doc were uploaded
-
 
 ### Present release
 
@@ -57,12 +65,6 @@ Make sure you have most recent Rest API and Bot versions also version with this 
 
 Initial release
 
-## Requirements
-
-* Min 4.51v Live Helper Chat version.
-* At the moment Polling workflow is supported only.
-* Account at https://platform.openai.com/docs/overview
-* `System configuration -> Live Help Configuration -> Chat configuration -> Misc` Make sure you unheck `Reopen chat functionality enabled` and `Allow user to reopen closed chats?`. This is required because if chat is reopened we can be in the middle of previous task.
 
 ## How to make UI snappy by delegating Rest API calls to background workers?
 
