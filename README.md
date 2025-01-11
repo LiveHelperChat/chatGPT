@@ -4,7 +4,7 @@ With this extension you won't need to pay anything to third party except OpenAI 
 
 ## Requirements
 
-* Min 4.55v Live Helper Chat version.
+* Min 4.52v Live Helper Chat version.
 * Polling/Streaming workflow is supported only.
 * Account at https://platform.openai.com/docs/overview
 * `System configuration -> Live Help Configuration -> Chat configuration -> Misc` Make sure you unheck `Reopen chat functionality enabled` and `Allow user to reopen closed chats?`. This is required because if chat is reopened we can be in the middle of previous task.
