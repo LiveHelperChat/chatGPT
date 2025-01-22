@@ -27,6 +27,11 @@ How it works?
 * Vector store is created and attached to assistant
 * To vector store files from https://github.com/LiveHelperChat/doc were uploaded
 
+#### How to call a trigger based on defined function in ChatGPT?
+
+1. Notice defined function name E.g `transfer_operator`
+2. Add [event](bot/triggers.md) to your trigger with `Type` of `Custom text matching` where `Should include any of these words` value should be `transfer_operator`. Screenshot can be found [here](https://doc.livehelperchat.com/docs/bot/chatgpt-integration#how-to-call-a-trigger-based-on-defined-function-in-chatgpt)
+
 ### Present release
 
 * Now you can use streaming workflow. For streaming to work you have to have those extensions up and running. 
