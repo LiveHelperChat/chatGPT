@@ -27,6 +27,14 @@ How it works?
 * Vector store is created and attached to assistant
 * To vector store files from https://github.com/LiveHelperChat/doc were uploaded
 
+### How to generate content for your own knowledge base?
+
+Demo bot is using documentation generated from this command. Take a look at official documentation of the tool at https://github.com/obeone/crawler-to-md It generated md file which later was uploaded at https://platform.openai.com
+
+```
+docker run --rm -v $(pwd)/output:/app/output -v $(pwd)/cache:/app/cache ghcr.io/obeone/crawler-to-md --url https://doc.livehelperchat.com --exclude "/docs/hooks"
+```
+
 #### How to call a trigger based on defined function in ChatGPT?
 
 1. Notice defined function name E.g `transfer_operator`
