@@ -35,6 +35,21 @@ Demo bot is using documentation generated from this command. Take a look at offi
 docker run --rm -v $(pwd)/output:/app/output -v $(pwd)/cache:/app/cache ghcr.io/obeone/crawler-to-md --url https://doc.livehelperchat.com --exclude "/docs/hooks"
 ```
 
+I have created fork also which fixes few things like absolute links and code tags parsing.
+
+Or just run. Modify to your needs. `--exclude` part is optional
+
+```
+docker run --rm -v $(pwd)/output:/app/output -v $(pwd)/cache:/app/cache remdex/crawler-to-md --url https://doc.livehelperchat.com --exclude "/docs/hooks"
+```
+
+Build from source
+```
+git clone https://github.com/LiveHelperChat/crawler-to-md.git && cd crawler-to-md
+DOCKER_BUILDKIT=1 docker build -t crawler-to-md .
+docker run --rm -v $(pwd)/output:/app/output -v $(pwd)/cache:/app/cache crawler-to-md --url https://doc.livehelperchat.com --exclude "/docs/hooks"
+```
+
 #### How to call a trigger based on defined function in ChatGPT?
 
 1. Notice defined function name E.g `transfer_operator`
