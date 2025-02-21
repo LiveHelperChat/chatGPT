@@ -13,12 +13,14 @@ With this extension you won't need to pay anything to third party except OpenAI 
 
 ### Demo
 
-You can see ChatGPT chat running on https://doc.livehelperchat.com/ it can answer questions only related to Live Helper Chat documentation. Demo also supports streaming.
+* You can see ChatGPT chat running on https://doc.livehelperchat.com/ it can answer questions only related to Live Helper Chat documentation. Demo also supports streaming.
+* For facebook demo look at https://www.facebook.com/LiveHelperChat/ and write message to messenger :)
 
 We are using for this demo https://livehelperchat.com/order/now if you want easily setup your own bot.
 
 * For streaming demo look at https://youtu.be/9clxMjnrGsM
 * For setup from scratch without extension, look at https://youtu.be/SEsOjmoKdrI
+* For setup on facebook messenger look at https://youtu.be/nIExwuWeb3E
 
 How it works?
 
