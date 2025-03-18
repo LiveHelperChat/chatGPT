@@ -2,6 +2,12 @@
 
 With this extension you won't need to pay anything to third party except OpenAI for contextual search based on your personal data. Streaming is also supported!
 
+For those setups samples you don't need to setup extension
+
+* Completions API sample setup - https://doc.livehelperchat.com/docs/bot/chatgpt-integration
+* Responses API sample setup - https://doc.livehelperchat.com/docs/bot/chatgpt-responses
+* Assistant API is depreciated, but you can look at this sample - https://youtu.be/SEsOjmoKdrI
+
 ## Requirements
 
 * Min 4.52v Live Helper Chat version.
