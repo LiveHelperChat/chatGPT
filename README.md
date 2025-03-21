@@ -4,8 +4,10 @@ With this extension you won't need to pay anything to third party except OpenAI 
 
 For those setups samples you don't need to setup extension
 
-* Completions API sample setup - https://doc.livehelperchat.com/docs/bot/chatgpt-integration
+Differences between those API - https://platform.openai.com/docs/guides/responses-vs-chat-completions It is recommended just to use `Responses` API
+
 * Responses API sample setup - https://doc.livehelperchat.com/docs/bot/chatgpt-responses
+* Completions API sample setup - https://doc.livehelperchat.com/docs/bot/chatgpt-integration
 * Assistant API is depreciated, but you can look at this sample - https://youtu.be/SEsOjmoKdrI
 
 ## Requirements
