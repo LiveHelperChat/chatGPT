@@ -42,7 +42,7 @@ How it works?
 Demo bot is using documentation generated from this command. Take a look at official documentation of the tool at https://github.com/obeone/crawler-to-md It generated md file which later was uploaded at https://platform.openai.com
 
 ```
-docker run --rm -v $(pwd)/output:/app/output -v $(pwd)/cache:/app/cache ghcr.io/obeone/crawler-to-md --url https://doc.livehelperchat.com --exclude "/docs/hooks"
+docker run --rm -v $(pwd)/output:/app/output -v $(pwd)/cache:/app/cache remdex/crawler-to-md --url https://doc.livehelperchat.com --exclude "/docs/hooks"
 ```
 
 I have created fork also which fixes few things like absolute links and code tags parsing.
