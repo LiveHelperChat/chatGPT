@@ -27,6 +27,10 @@ class ChatGPTLiveHelperChatValidator {
             $messages[] = ['role' => 'user', 'content' => $question];
         }
 
+        if (!empty($data['system_instructions'])) {
+            array_unshift($messages, ['role' => 'system', 'content' => $data['system_instructions']]);
+        }
+
         $payload = json_encode([
             'model' => $model,
             "stream" => false,
