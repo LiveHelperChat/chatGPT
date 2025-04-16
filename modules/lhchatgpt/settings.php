@@ -11,7 +11,7 @@ if (isset($_POST['CreateUpdateRestAPI'])) {
 
     \LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatActivator::installOrUpdate([
         'CHAT_GPT_TOKEN' => $_POST['project_api_key'],
-        'CHATGPT_ASSISTANT_ID' => $_POST['assistant_id']
+        'CHAT_GPT_STORAGE_ID' => $_POST['vstorage_id']
     ]);
 
     $tpl->set('updated','done');

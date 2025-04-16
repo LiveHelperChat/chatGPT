@@ -1,4 +1,6 @@
-# ChatGPT assistant workflow model support
+# ChatGPT responses workflow model support
+
+This extension was updated to `Responses` API https://doc.livehelperchat.com/docs/bot/chatgpt-responses
 
 With this extension you won't need to pay anything to third party except OpenAI for contextual search based on your personal data. Streaming is also supported!
 
@@ -34,7 +36,6 @@ How it works?
 
 * Account at https://platform.openai.com is created
 * Background worker is used https://github.com/LiveHelperChat/lhc-php-resque
-* Vector store is created and attached to assistant
 * To vector store files from https://github.com/LiveHelperChat/doc were uploaded
 
 ### How to generate content for your own knowledge base?
@@ -82,28 +83,6 @@ Documentation section regarding how streaming works
 
 https://doc.livehelperchat.com/docs/bot/rest-api#streaming
 
-### v1.2
-
-* Added support for empty first visitor message on chat start. Rest API call now uses `{not_emtpy_*` feature.
-* Meta data for a Run is stored within chat, because there can be no message during run. E.g first run on chat start
-    * Because of this chat `Bot` and `Rest API` calls were modified.
-
-Required version since this - https://github.com/LiveHelperChat/livehelperchat/commit/5b2f0b25404dfe8bf56a15d5031086de3622c496
-
-### v1.1
-
-Updates
-
-* Multiple tools call support. `ScheduleRun` Rest API call will use `"parallel_tool_calls": false,` argument
-* Bot now has example how to have multiple tools calls with arguments
-
-Make sure you have most recent Rest API and Bot versions also version with this commit https://github.com/LiveHelperChat/livehelperchat/commit/6e9ecaa573902adc082204799fec98f7796d81d9
-
-### V1.0
-
-Initial release
-
-
 ## How to make UI snappy by delegating Rest API calls to background workers?
 
 * Install https://github.com/LiveHelperChat/lhc-php-resque
@@ -142,39 +121,25 @@ Under left Modules you will find `ChatGPT` click it.
 ### Setup as a bot
 
  * Click `ChatGPT Bot integration settings`
- * Now just paste `Project API Key` and `Assistant ID` from https://platform.openai.com and click `Create/Update Rest API/Bot`
+ * Now just paste `Project API Key` and `Vector storage ID` from https://platform.openai.com and click `Create/Update Rest API/Bot`
 
 Now you can just assign newly created bot to your department or modify bot to the way you want.
-
-#### How to avoid bot calling functions if visitor is not logged in?
-
-In a `ScheduleRun` Rest API call you can have something like `{is_empty__args.chat.chat_variables_array.is_logged}` which checks that chat variable is set.
-
-```
-{
-    "assistant_id": "asst_UAJYImd9WyXlRGNOa0bcTAgD",
-     "parallel_tool_calls": false
-     {is_empty__args.chat.chat_variables_array.is_logged}
-        ,"tools":[]
-        , "additional_instructions":"Visitor is not logged in and functions calls are not enable to him. You can answer questions only from documentation. Ask him to login to get personal account information. You can get personal information once visitor is logged in."
-     {/is_empty}
-     {not_empty__msg_url},"additional_messages" : [{"role" : "user", "content" :  {{msg_url}} }]{/not_empty}
-}
-```
 
 ### Setup pas reply predictor for the agents
 
  * Click `ChatGPT Setting for answers suggesting` 
- * `Project API Key` and `Assistant ID` can be different than Bot
+ * `Project API Key` and `Vector storage ID` can be different than Bot
  * Fer reply predictions to work you have to activate bot from `Setup as a bot` step. We use some of the Rest API calls.
  
 ### How to have only manual reply predictions tab in the chat interface?
 
 Have only `Enable reply prediction tab in chat UI` checked.
 
-### How to have only manual reply predictions tab in the chat interface?
+### How to have automatic answer suggesting in chat window?
 
 Have `Automatically suggest answers based on visitor messages`
+
+![image](https://github.com/user-attachments/assets/8839d268-f15b-4101-bb95-7460dd8a8c13)
 
 ## Setup video tutorial
 
@@ -196,6 +161,7 @@ Chat GPT function definition
 ```json
 {
   "name": "post-update-phone-number",
+  "type": "function",
   "description": "Updates the phone number for a player.",
   "strict": true,
   "parameters": {
@@ -250,6 +216,7 @@ Chat GPT function definition
 ```json
 {
   "name": "get_withdrawals",
+  "type" : "function",
   "description": "Retrieves a list of withdrawals for a visitor.",
   "strict": true,
   "parameters": {

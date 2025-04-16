@@ -6,25 +6,10 @@ var lhcChatGPT = {
     },
 
     replyByChat : function (chat_id) {
-        $.postJSON(WWW_DIR_JAVASCRIPT + 'chatgpt/getanswer/answerbychat', {'chat_id' : chat_id, 'question' : $('#chatgpt_question_'+chat_id).val()}, function (data) {
-            lhcChatGPT.getRunStatus(data.thread_id, data.run_id, chat_id);
+        $.postJSON(WWW_DIR_JAVASCRIPT + 'chatgpt/getanswer/answer', {'chat_id' : chat_id, 'question' : $('#chatgpt_question_'+chat_id).val()}, function (data) {
+            $('#chatgpt_response_' + chat_id).html(data.response);
         });
         return false;
-    },
-
-    getRunStatus : function (thread_id, run_id, chat_id) {
-        $.postJSON(WWW_DIR_JAVASCRIPT + 'chatgpt/getanswer/answer',{'thread_id': thread_id, 'run_id' : run_id}, function(data){
-            if (data.status  != 'completed') {
-                $('#chatgpt_response_' + chat_id).html(data.status);
-                setTimeout(function () {
-                    lhcChatGPT.getRunStatus(thread_id, run_id, chat_id);
-                }, 1000)
-            } else {
-                $('#chatgpt_response_' + chat_id).html(data.response);
-            }
-        }).fail(function(){
-            alert('request failed');
-        });
     },
 
     addListener : function (evt) {

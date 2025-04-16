@@ -27,27 +27,12 @@
                 return;
             }
             
-            $.postJSON(WWW_DIR_JAVASCRIPT + 'chatgpt/getanswer/schedule',{'question': question}, function(data){
-                getRunStatus(data.thread_id, data.run_id);
+            $.postJSON(WWW_DIR_JAVASCRIPT + 'chatgpt/getanswer/answer', {'question': question}, function(data){
+                $('#chatgpt-answer').html(data.response);
             }).fail(function(){
                 alert('request failed');
             });
         });
-
-        function getRunStatus(thread_id, run_id) {
-            $.postJSON(WWW_DIR_JAVASCRIPT + 'chatgpt/getanswer/answer',{'thread_id': thread_id, 'run_id' : run_id}, function(data){
-                if (data.status  != 'completed') {
-                    $('#chatgpt-answer').html(data.status);
-                    setTimeout(function () {
-                        getRunStatus(thread_id, run_id);
-                    }, 1000)
-                } else {
-                    $('#chatgpt-answer').html(data.response);
-                }
-            }).fail(function(){
-                alert('request failed');
-            });
-        }
 
     })();
 </script>

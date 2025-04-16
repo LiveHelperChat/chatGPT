@@ -14,8 +14,18 @@
     </div>
 
     <div class="form-group">
-        <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Assistant ID')?></label>
-        <input type="text" name="assistant_id" value="<?php isset($chatgpt_suggest['assistant_id']) ? print htmlspecialchars($chatgpt_suggest['assistant_id']) : ''?>"  class="form-control form-control-sm" />
+        <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Vector storage id')?></label>
+        <input type="text" name="vstorage_id" value="<?php isset($chatgpt_suggest['vstorage_id']) ? print htmlspecialchars($chatgpt_suggest['vstorage_id']) : ''?>"  class="form-control form-control-sm" />
+    </div>
+
+    <div class="form-group">
+        <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Default model')?></label>
+        <input type="text" name="model" placeholder="Default - gpt-4o-mini" value="<?php isset($chatgpt_suggest['model']) ? print htmlspecialchars($chatgpt_suggest['model']) : ''?>"  class="form-control form-control-sm" />
+    </div>
+
+    <div class="form-group">
+        <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','System instructions')?></label>
+        <textarea type="text" name="system_instructions" rows="3" class="form-control form-control-sm"><?php isset($chatgpt_suggest['system_instructions']) ? print htmlspecialchars($chatgpt_suggest['system_instructions']) : ''?></textarea>
     </div>
 
     <div class="form-group">

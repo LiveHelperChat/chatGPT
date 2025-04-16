@@ -7,11 +7,11 @@ class ChatGPTLiveHelperChatActivator {
     // Remove SMS
     public static function remove()
     {
-        if ($restAPI = \erLhcoreClassModelGenericBotRestAPI::findOne(['filter' => ['name' => 'ChatGPTAssistant']])) {
+        if ($restAPI = \erLhcoreClassModelGenericBotRestAPI::findOne(['filter' => ['name' => 'ChatGPTResponse']])) {
             $restAPI->removeThis();
         }
 
-        if ($botPrevious = \erLhcoreClassModelGenericBotBot::findOne(['filter' => ['name' => 'ChatGPTAssistant']])) {
+        if ($botPrevious = \erLhcoreClassModelGenericBotBot::findOne(['filter' => ['name' => 'ChatGPTResponse']])) {
             $botPrevious->removeThis();
         }
     }
@@ -19,27 +19,27 @@ class ChatGPTLiveHelperChatActivator {
     public static function installOrUpdate($params)
     {
         // RestAPI
-        $restAPI = \erLhcoreClassModelGenericBotRestAPI::findOne(['filter' => ['name' => 'ChatGPTAssistant']]);
+        $restAPI = \erLhcoreClassModelGenericBotRestAPI::findOne(['filter' => ['name' => 'ChatGPTResponse']]);
         $content = json_decode(file_get_contents('extension/chatgpt/doc/assistant/rest-api.json'),true);
 
         $content['configuration'] = str_replace('{CHAT_GPT_TOKEN}',isset($params['CHAT_GPT_TOKEN']) ? $params['CHAT_GPT_TOKEN'] : 'CHAT_GPT_TOKEN', $content['configuration']);
-        $content['configuration'] = str_replace('{CHATGPT_ASSISTANT_ID}',isset($params['CHATGPT_ASSISTANT_ID']) ? $params['CHATGPT_ASSISTANT_ID'] : 'CHATGPT_ASSISTANT_ID', $content['configuration']);
+        $content['configuration'] = str_replace('{CHAT_GPT_STORAGE_ID}',isset($params['CHAT_GPT_STORAGE_ID']) ? $params['CHAT_GPT_STORAGE_ID'] : 'CHAT_GPT_STORAGE_ID', $content['configuration']);
 
         if (!$restAPI) {
             $restAPI = new \erLhcoreClassModelGenericBotRestAPI();
         }
 
         $restAPI->setState($content);
-        $restAPI->name = 'ChatGPTAssistant';
+        $restAPI->name = 'ChatGPTResponse';
         $restAPI->saveThis();
 
         // Bot
-        if ($botPrevious = \erLhcoreClassModelGenericBotBot::findOne(['filter' => ['name' => 'ChatGPTAssistant']])) {
+        if ($botPrevious = \erLhcoreClassModelGenericBotBot::findOne(['filter' => ['name' => 'ChatGPTResponse']])) {
             $botPrevious->removeThis();
         }
 
         $botData = \erLhcoreClassGenericBotValidator::importBot(json_decode(file_get_contents('extension/chatgpt/doc/assistant/bot-api.json'),true));
-        $botData['bot']->name = 'ChatGPTAssistant';
+        $botData['bot']->name = 'ChatGPTResponse';
         $botData['bot']->updateThis(['update' => ['name']]);
 
         foreach ($botData['triggers'] as $trigger) {

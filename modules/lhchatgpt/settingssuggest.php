@@ -16,7 +16,13 @@ if (isset($_POST['StoreOptions'])) {
         'project_api_key' => new ezcInputFormDefinitionElement(
             ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'
         ),
-        'assistant_id' => new ezcInputFormDefinitionElement(
+        'vstorage_id' => new ezcInputFormDefinitionElement(
+            ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'
+        ),
+        'system_instructions' => new ezcInputFormDefinitionElement(
+            ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'
+        ),
+        'model' => new ezcInputFormDefinitionElement(
             ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'
         ),
         'limit_last' => new ezcInputFormDefinitionElement(
@@ -45,10 +51,22 @@ if (isset($_POST['StoreOptions'])) {
         $data['project_api_key'] = '';
     }
 
-    if ( $form->hasValidData( 'assistant_id' )) {
-        $data['assistant_id'] = $form->assistant_id;
+    if ( $form->hasValidData( 'vstorage_id' )) {
+        $data['vstorage_id'] = $form->vstorage_id;
     } else {
-        $data['assistant_id'] = '';
+        $data['vstorage_id'] = '';
+    }
+
+    if ( $form->hasValidData( 'system_instructions' )) {
+        $data['system_instructions'] = $form->system_instructions;
+    } else {
+        $data['system_instructions'] = '';
+    }
+
+    if ( $form->hasValidData( 'model' )) {
+        $data['model'] = $form->model;
+    } else {
+        $data['model'] = '';
     }
 
     if ( $form->hasValidData( 'keep_previous' )) {
