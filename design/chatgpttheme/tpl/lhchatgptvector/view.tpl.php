@@ -1,0 +1,138 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Vector Storage: <?php echo htmlspecialchars($storage['name']); ?></h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-sm">
+                            <tr>
+                                <th>ID</th>
+                                <td><?php echo htmlspecialchars($storage['id']); ?></td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td><span class="badge bg-success"><?php echo htmlspecialchars($storage['status']); ?></span></td>
+                            </tr>
+                            <tr>
+                                <th>Created</th>
+                                <td><?php echo date('Y-m-d H:i:s', $storage['created_at']); ?></td>
+                            </tr>
+                            <tr>
+                                <th>Last Active</th>
+                                <td><?php echo date('Y-m-d H:i:s', $storage['last_active_at']); ?></td>
+                            </tr>
+                            <tr>
+                                <th>Storage Usage</th>
+                                <td><?php echo number_format($storage['usage_bytes'] / 1024 / 1024, 2); ?> MB</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title">File Counts</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="info-box bg-info rounded text-white ps-1">
+                                            <div class="info-box-content">
+                                                <span class="info-box-text text-white">Total</span>
+                                                <span class="info-box-number text-white"><?php echo $storage['file_counts']['total']; ?></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="info-box bg-success text-white ps-1 rounded">
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">Completed</span>
+                                                <span class="info-box-number"><?php echo $storage['file_counts']['completed']; ?></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="info-box bg-warning text-white ps-1 rounded">
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">In Progress</span>
+                                                <span class="info-box-number"><?php echo $storage['file_counts']['in_progress']; ?></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="info-box bg-danger text-white ps-1 rounded">
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">Failed</span>
+                                                <span class="info-box-number"><?php echo $storage['file_counts']['failed']; ?></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Files</h3>
+            </div>
+            <div class="card-body">
+                <?php if (isset($files['data']) && !empty($files['data'])): ?>
+                <table class="table table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Size</th>
+                            <th>Chunk Size</th>
+                            <th>Overlap</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($files['data'] as $file) : $fileInformation = \LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatVectorStorage::getFile($file['id']); ?>
+                        <tr>
+                            <td title="<?php echo htmlspecialchars($file['id']); ?>"><?php echo htmlspecialchars($fileInformation['filename'] ?? 'File was deleted!'); ?></td>
+                            <td>
+                                <?php if ($file['status'] == 'completed'): ?>
+                                <span class="badge bg-success">Completed</span>
+                                <?php elseif ($file['status'] == 'in_progress'): ?>
+                                <span class="badge bg-warning">In Progress</span>
+                                <?php else: ?>
+                                <span class="badge bg-danger"><?php echo htmlspecialchars($file['status']); ?></span>
+                                <?php endif; ?>
+                            </td>
+                            <td><?php echo date('Y-m-d H:i:s', $file['created_at']); ?></td>
+                            <td><?php echo number_format($file['usage_bytes'] / 1024, 2); ?> KB</td>
+                            <td><?php echo isset($file['chunking_strategy']['static']['max_chunk_size_tokens']) ? $file['chunking_strategy']['static']['max_chunk_size_tokens'] : 'N/A'; ?></td>
+                            <td><?php echo isset($file['chunking_strategy']['static']['chunk_overlap_tokens']) ? $file['chunking_strategy']['static']['chunk_overlap_tokens'] : 'N/A'; ?></td>
+                            <td>
+                                <a class="btn btn-xs btn-danger csfr-required" onclick="return confirm('Are you sure?')" href="<?php echo erLhcoreClassDesign::baseurl('chatgptvector/deletefile')?>/<?php echo htmlspecialchars($storage_id)?>/<?php echo htmlspecialchars($file['id'])?>"><i class="material-icons me-0">&#xE872;</i></a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php else: ?>
+                <p>No files found in this vector storage.</p>
+                <?php endif; ?>
+
+                <?php include(erLhcoreClassDesign::designtpl('lhkernel/secure_links.tpl.php')); ?>
+
+                <button onclick="lhc.revealModal({'title' : 'Upload file to vector storage','iframe':true,'height':500,'url':WWW_DIR_JAVASCRIPT +'chatgptvector/upload/<?php echo htmlspecialchars($storage_id)?>'})" type="button" class="btn btn-sm btn-primary">Upload</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+

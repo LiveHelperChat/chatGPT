@@ -7,4 +7,8 @@
     <?php if (erLhcoreClassUser::instance()->hasAccessTo('lhchatgpt','manage_invalid')) : ?>
         <li><a href="<?php echo erLhcoreClassDesign::baseurl('chatgpt/invalid')?>"><span class="material-icons">report</span><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Reported invalid suggestions');?></a></li>
     <?php endif;?>
+
+    <?php if (erLhcoreClassUser::instance()->hasAccessTo('lhchatgptvector','configure')) : ?>
+        <li><a href="<?php echo erLhcoreClassDesign::baseurl('chatgptvector/list')?>"><span class="material-icons">report</span><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Vector storages');?></a></li>
+    <?php endif;?>
 </ul>
