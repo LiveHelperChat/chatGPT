@@ -139,7 +139,7 @@ Have only `Enable reply prediction tab in chat UI` checked.
 
 Have `Automatically suggest answers based on visitor messages`
 
-![image](https://github.com/user-attachments/assets/8839d268-f15b-4101-bb95-7460dd8a8c13)
+![image](https://github.com/LiveHelperChat/chatGPT/blob/main/doc/responses.png?raw=true)
 
 ## Setup video tutorial
 
