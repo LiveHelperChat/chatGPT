@@ -30,11 +30,11 @@ $tpl->set('inputAppend',$append);
 $tpl->set('current_user_id',$currentUser->getUserID());
 
 $Result['content'] = $tpl->fetch();
-
+ 
 $Result['path'] = array(
     array (
         'url' =>erLhcoreClassDesign::baseurl('chatgpt/index'),
-        'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('lhcchatbot/module','Chat GPT')
+        'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('lhcchatbot/module','OpenAI')
     ),
     array(
         'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('lhcchatbot/module', 'Vector storages')

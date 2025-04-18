@@ -1,4 +1,4 @@
-<h1><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','ChatGPT Test'); ?></h1>
+<h1><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','OpenAI Test'); ?></h1>
 
 <form action="" method="post" ng-non-bindable>
 

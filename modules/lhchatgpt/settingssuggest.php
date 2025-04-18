@@ -125,7 +125,7 @@ $Result['content'] = $tpl->fetch();
 $Result['path'] = array(
     array(
         'url' => erLhcoreClassDesign::baseurl('chatgpt/index'),
-        'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Chat GPT')
+        'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','OpenAI')
     ),
     array(
         'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Settings')

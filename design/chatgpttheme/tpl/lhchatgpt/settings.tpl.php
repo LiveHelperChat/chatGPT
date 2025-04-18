@@ -1,4 +1,4 @@
-<h1><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','ChatGPT Integration as a bot settings'); ?></h1>
+<h1><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','OpenAI Integration as a bot settings'); ?></h1>
 
 <p><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','It will install Open AI bot based on Responses non-streaming version.')?></p>
 

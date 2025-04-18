@@ -32,10 +32,10 @@ $Result['content'] = $tpl->fetch();
 $Result['path'] = array(
     array (
         'url' =>erLhcoreClassDesign::baseurl('chatgpt/index'),
-        'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','ChatGPT')
+        'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','OpenAI')
     ),
     array(
-        'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','ChatGPT settings')
+        'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','OpenAI settings')
     )
 );
 

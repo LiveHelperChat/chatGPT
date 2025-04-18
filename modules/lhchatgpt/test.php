@@ -6,7 +6,7 @@ $Result['content'] = $tpl->fetch();
 $Result['path'] = array(
     array (
         'url' =>erLhcoreClassDesign::baseurl('chatgpt/index'),
-        'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('lhcchatbot/module','ChatGPT')
+        'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('lhcchatbot/module','OpenAI')
     ),
     array(
         'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('lhcchatbot/module','Test')

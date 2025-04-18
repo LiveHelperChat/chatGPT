@@ -19,6 +19,15 @@ if (isset($Params['user_parameters']['id'])) {
 
 $Result['content'] = $tpl->fetch();
 $Result['path'] = array(
-    array('url' => erLhcoreClassDesign::baseurl('chatgptvector/list'), 'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('chatgptvector/module', 'Vector Storage')),
-    array('title' => erTranslationClassLhTranslation::getInstance()->getTranslation('chatgptvector/module', 'Vector Storage Files'))
+    array (
+        'url' =>erLhcoreClassDesign::baseurl('chatgpt/index'),
+        'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('lhcchatbot/module','OpenAI')
+    ),
+    array(
+        'url' => erLhcoreClassDesign::baseurl('chatgptvector/list'),
+        'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('lhcchatbot/module', 'Vector storages')
+    ),
+    array(
+        'title' => erTranslationClassLhTranslation::getInstance()->getTranslation('lhcchatbot/module', 'View vector storage')
+    )
 );
