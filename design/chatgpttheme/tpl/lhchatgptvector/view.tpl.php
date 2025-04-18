@@ -127,8 +127,6 @@
                 <p>No files found in this vector storage.</p>
                 <?php endif; ?>
 
-                <?php include(erLhcoreClassDesign::designtpl('lhkernel/secure_links.tpl.php')); ?>
-
                 <button onclick="lhc.revealModal({'title' : 'Upload file to vector storage','iframe':true,'height':500,'url':WWW_DIR_JAVASCRIPT +'chatgptvector/upload/<?php echo htmlspecialchars($storage_id)?>'})" type="button" class="btn btn-sm btn-primary">Upload</button>
 
             </div>
@@ -136,3 +134,71 @@
     </div>
 </div>
 
+
+<div class="row mt-2">
+    <div class="col-12">
+        <div class="card card-outline card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Crawls</h3>
+            </div>
+            <div class="card-body">
+
+                <?php if ($crawls = LiveHelperChatExtension\chatgpt\providers\erLhcoreClassModelChatGPTCrawl::getList(['filter' => ['vector_storage_id' => $storage_id]])) : ?>
+                    <table class="table table-hover table-sm">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>URL</th>
+                            <th>Number of Pages</th>
+                            <th>Crawl Frequency</th>
+                            <th>Last Crawled</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($crawls as $crawl) : ?>
+                            <tr>
+                                <td>
+                                    <a href="#" title="<?php echo htmlspecialchars($crawl->file_id); ?>" onclick="lhc.revealModal({'url':WWW_DIR_JAVASCRIPT +'chatgptvector/editcrawl/<?php echo htmlspecialchars($storage_id)?>/<?php echo $crawl->id?>'})" ><?php echo htmlspecialchars($crawl->name); ?></a>
+                                    <?php if ($crawl->file_id != '') : ?>
+                                            <span class="material-icons" title="File ID: <?php echo htmlspecialchars($crawl->file_id); ?>">description</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td><?php echo htmlspecialchars(str_replace("\n", ", ", $crawl->url)); ?></td>
+                                <td><?php echo htmlspecialchars($crawl->number_of_pages); ?></td>
+                                <td><?php echo htmlspecialchars($crawl->crawl_frequency); ?></td>
+                                <td><?php echo $crawl->last_crawled_at > 0 ? date('Y-m-d H:i:s', $crawl->last_crawled_at) : 'Never'; ?></td>
+                                <td>
+                                    <?php if ($crawl->status == \LiveHelperChatExtension\chatgpt\providers\erLhcoreClassModelChatGPTCrawl::STATUS_IDLE): ?>
+                                    <span class="badge bg-secondary">Idle</span>
+                                    <?php elseif ($crawl->status == \LiveHelperChatExtension\chatgpt\providers\erLhcoreClassModelChatGPTCrawl::STATUS_CRAWLING): ?>
+                                    <span class="badge bg-warning">Crawling</span>
+                                    <?php elseif ($crawl->status == \LiveHelperChatExtension\chatgpt\providers\erLhcoreClassModelChatGPTCrawl::STATUS_ERROR): ?>
+                                    <span class="badge bg-danger">Error</span>
+                                    <?php elseif ($crawl->status == \LiveHelperChatExtension\chatgpt\providers\erLhcoreClassModelChatGPTCrawl::STATUS_COMPLETED): ?>
+                                    <span class="badge bg-success">Completed</span>
+                                    <?php else: ?>
+                                    <span class="badge bg-info">Unknown</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <a class="btn btn-xs btn-warning csfr-required me-1" onclick="return confirm('Reset crawl status?')" href="<?php echo erLhcoreClassDesign::baseurl('chatgptvector/resetcrawl')?>/<?php echo htmlspecialchars($storage_id)?>/<?php echo $crawl->id?>"><i class="material-icons me-0">refresh</i></a>
+                                    <a class="btn btn-xs btn-danger csfr-required" onclick="return confirm('Are you sure?')" href="<?php echo erLhcoreClassDesign::baseurl('chatgptvector/deletecrawl')?>/<?php echo htmlspecialchars($storage_id)?>/<?php echo $crawl->id?>"><i class="material-icons me-0">&#xE872;</i></a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <p>No crawls found for this vector storage.</p>
+                <?php endif; ?>
+
+                <button onclick="lhc.revealModal({'url':WWW_DIR_JAVASCRIPT +'chatgptvector/newcrawl/<?php echo htmlspecialchars($storage_id)?>'})" type="button" class="btn btn-sm btn-primary">New</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php include(erLhcoreClassDesign::designtpl('lhkernel/secure_links.tpl.php')); ?>

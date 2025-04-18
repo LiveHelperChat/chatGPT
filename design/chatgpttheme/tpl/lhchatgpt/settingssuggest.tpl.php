@@ -8,24 +8,35 @@
         <?php include(erLhcoreClassDesign::designtpl('lhkernel/alert_success.tpl.php'));?>
     <?php endif; ?>
 
-    <div class="form-group">
-        <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Project API Key')?></label>
-        <input type="text" name="project_api_key" value="<?php isset($chatgpt_suggest['project_api_key']) ? print htmlspecialchars($chatgpt_suggest['project_api_key']) : ''?>"  class="form-control form-control-sm" />
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','Project API Key');?></label>
+                <input type="text" class="form-control form-control-sm" name="project_api_key" value="<?php echo htmlspecialchars($chatgpt_suggest['project_api_key'])?>" />
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','Vector storage ID');?></label>
+                <input type="text" class="form-control form-control-sm" name="vstorage_id" value="<?php echo htmlspecialchars($chatgpt_suggest['vstorage_id'])?>" />
+            </div>
+        </div>
     </div>
 
     <div class="form-group">
-        <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Vector storage id')?></label>
-        <input type="text" name="vstorage_id" value="<?php isset($chatgpt_suggest['vstorage_id']) ? print htmlspecialchars($chatgpt_suggest['vstorage_id']) : ''?>"  class="form-control form-control-sm" />
+        <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','Crawl API Key');?></label>
+        <input type="text" class="form-control form-control-sm" name="crawl_api_key" value="<?php echo htmlspecialchars($chatgpt_suggest['crawl_api_key'] ?? '')?>" />
+        <p><small><i><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','API key used for authentication of pending crawl requests');?></i></small></p>
+    </div>
+
+    <div class="form-group">
+        <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','System instructions');?></label>
+        <textarea class="form-control form-control-sm" name="system_instructions"><?php echo htmlspecialchars($chatgpt_suggest['system_instructions'])?></textarea>
     </div>
 
     <div class="form-group">
         <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Default model')?></label>
         <input type="text" name="model" placeholder="Default - gpt-4o-mini" value="<?php isset($chatgpt_suggest['model']) ? print htmlspecialchars($chatgpt_suggest['model']) : ''?>"  class="form-control form-control-sm" />
-    </div>
-
-    <div class="form-group">
-        <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','System instructions')?></label>
-        <textarea type="text" name="system_instructions" rows="3" class="form-control form-control-sm"><?php isset($chatgpt_suggest['system_instructions']) ? print htmlspecialchars($chatgpt_suggest['system_instructions']) : ''?></textarea>
     </div>
 
     <div class="form-group">

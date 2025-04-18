@@ -8,7 +8,7 @@ if (!$currentUser->validateCSFRToken($Params['user_parameters_unordered']['csfr'
 // Delete all vector storage files
 foreach(\LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatVectorStorage::listFiles($Params['user_parameters']['id'])['data'] as $storeFile) {
     // Delete association
-    \LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatVectorStorage::deleteFileFromVectoreStorage($Params['user_parameters']['id'], $storeFile['id']);
+    \LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatVectorStorage::deleteFileFromVectorStorage($Params['user_parameters']['id'], $storeFile['id']);
 
     // Delete file
     \LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatVectorStorage::deleteFile($storeFile['id']);

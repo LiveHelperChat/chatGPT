@@ -135,7 +135,7 @@ class ChatGPTLiveHelperChatVectorStorage {
      * @param string $purpose Purpose of the file (e.g., 'fine-tune', 'assistants', etc.)
      * @return array Response from API
      */
-    public static function uploadFile($filePath, $fileName, $purpose = 'user_data')
+    public static function uploadFile($filePathOrContent, $fileName, $purpose = 'user_data', $isRawContent = false)
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://api.openai.com/v1/files');
@@ -144,8 +144,18 @@ class ChatGPTLiveHelperChatVectorStorage {
 
         $postFields = [
             'purpose' => $purpose,
-            'file' => new \CURLFile($filePath, null, $fileName)
         ];
+
+        if ($isRawContent) {
+            // Create temporary file from content
+            $tempFile = tmpfile();
+            fwrite($tempFile, $filePathOrContent);
+            $tempFilePath = stream_get_meta_data($tempFile)['uri'];
+            $postFields['file'] = new \CURLFile($tempFilePath, null, $fileName);
+        } else {
+            // Use existing file path
+            $postFields['file'] = new \CURLFile($filePathOrContent, null, $fileName);
+        }
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -153,6 +163,12 @@ class ChatGPTLiveHelperChatVectorStorage {
         ]);
 
         $result = curl_exec($ch);
+        
+        // Close temp file if it was created
+        if ($isRawContent) {
+            fclose($tempFile);
+        }
+        
         curl_close($ch);
 
         return json_decode($result, true);
@@ -192,7 +208,7 @@ class ChatGPTLiveHelperChatVectorStorage {
      * @param string $fileId ID of the file to delete from storage
      * @return array Response from API
      */
-    public static function deleteFileFromVectoreStorage($storageId, $fileId)
+    public static function deleteFileFromVectorStorage($storageId, $fileId)
     {
         return self::sendRequest('vector_stores/' . $storageId . '/files/' . $fileId, 'DELETE');
     }

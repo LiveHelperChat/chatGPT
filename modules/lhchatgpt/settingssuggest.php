@@ -39,6 +39,9 @@ if (isset($_POST['StoreOptions'])) {
         ),
         'chat_reply_tab' => new ezcInputFormDefinitionElement(
             ezcInputFormDefinitionElement::OPTIONAL, 'boolean'
+        ),
+        'crawl_api_key' => new ezcInputFormDefinitionElement(
+            ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'
         )
     );
 
@@ -55,6 +58,12 @@ if (isset($_POST['StoreOptions'])) {
         $data['vstorage_id'] = $form->vstorage_id;
     } else {
         $data['vstorage_id'] = '';
+    }
+
+    if ( $form->hasValidData( 'crawl_api_key' )) {
+        $data['crawl_api_key'] = $form->crawl_api_key;
+    } else {
+        $data['crawl_api_key'] = '';
     }
 
     if ( $form->hasValidData( 'system_instructions' )) {
