@@ -10,5 +10,9 @@ CREATE TABLE `lhc_chatgpt_crawl` (
                                      `number_of_pages` int(11) unsigned DEFAULT NULL,
                                      `file_id` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
                                      `status` tinyint(1) unsigned NOT NULL DEFAULT 0,
-                                     PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_cil
+                                     `base_url` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                     `start_url` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                     `max_pages` int(11) unsigned NOT NULL DEFAULT 0,
+                                     PRIMARY KEY (`id`),
+                                     KEY `status_last_crawled_at` (`status`,`last_crawled_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
