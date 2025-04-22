@@ -29,7 +29,13 @@ try {
     );
     
     foreach ($pendingCrawls as $crawl) {
-        $responseData['result'][] = $crawl->getState();
+        $state = $crawl->getState();
+        if (isset($state['url']) && is_string($state['url'])) {
+            $state['url'] = preg_split('/\r\n|\r|\n/', $state['url'], -1, PREG_SPLIT_NO_EMPTY);
+        } else {
+            $state['url'] = [];
+        }
+        $responseData['result'][] = $state;
     }
     
     echo json_encode($responseData);

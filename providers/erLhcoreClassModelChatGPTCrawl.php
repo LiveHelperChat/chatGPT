@@ -73,7 +73,10 @@ class erLhcoreClassModelChatGPTCrawl
             'file_id' => $this->file_id,
             'crawl_frequency' => $this->crawl_frequency,
             'last_crawled_at' => $this->last_crawled_at,
-            'status' => $this->status
+            'status' => $this->status,
+            'base_url' => $this->base_url,
+            'start_url' => $this->start_url,
+            'max_pages' => $this->max_pages,
         );
     }
 
@@ -85,6 +88,9 @@ class erLhcoreClassModelChatGPTCrawl
     public $file_id = '';
     public $crawl_frequency = '';
     public $last_crawled_at = 0;
+    public $base_url = '';
+    public $start_url = '';
+    public $max_pages = 0;
     public $status = self::STATUS_IDLE; // 0 - idle, 1 - crawling, 2 - error
 }
 

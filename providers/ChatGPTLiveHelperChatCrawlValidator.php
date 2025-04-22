@@ -15,6 +15,9 @@ class ChatGPTLiveHelperChatCrawlValidator {
         $definition = array(
             'name' => new \ezcInputFormDefinitionElement(\ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'),
             'url' => new \ezcInputFormDefinitionElement(\ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'),
+            'start_url' => new \ezcInputFormDefinitionElement(\ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'),
+            'base_url' => new \ezcInputFormDefinitionElement(\ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'),
+            'max_pages' => new \ezcInputFormDefinitionElement(\ezcInputFormDefinitionElement::OPTIONAL, 'int', ['min_range' => 0]),
             'crawl_frequency' => new \ezcInputFormDefinitionElement(\ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'),
         );
 
@@ -25,6 +28,34 @@ class ChatGPTLiveHelperChatCrawlValidator {
             $item->name = $form->name;
         } else {
             $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/new', 'Please enter a name for the crawler');
+        }
+
+        if ($form->hasValidData('max_pages')) {
+            $item->max_pages = $form->max_pages;
+        } else {
+            $item->max_pages = 0;
+        }
+
+        // Validate start_url
+        if ($form->hasValidData('start_url') && $form->start_url != '') {
+            if (filter_var($form->start_url, FILTER_VALIDATE_URL)) {
+                $item->start_url = $form->start_url;
+            } else {
+                $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/validator', 'Please enter a valid start URL');
+            }
+        } else {
+            $item->start_url = '';
+        }
+
+        // Validate base_url
+        if ($form->hasValidData('base_url') && $form->base_url != '') {
+            if (filter_var($form->base_url, FILTER_VALIDATE_URL)) {
+                $item->base_url = $form->base_url;
+            } else {
+                $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/validator', 'Please enter a valid base URL');
+            }
+        } else {
+            $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/validator', 'Please enter a valid base URL');
         }
 
         if ($form->hasValidData('url') && $form->url != '') {
@@ -53,7 +84,7 @@ class ChatGPTLiveHelperChatCrawlValidator {
                 $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/new', 'Please enter at least one valid URL to crawl');
             }
         } else {
-            $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/new', 'Please enter a URL to crawl');
+            $item->url = '';
         }
 
         if ($form->hasValidData('crawl_frequency')) {

@@ -165,7 +165,15 @@
                                             <span class="material-icons" title="File ID: <?php echo htmlspecialchars($crawl->file_id); ?>">description</span>
                                     <?php endif; ?>
                                 </td>
-                                <td><?php echo htmlspecialchars(str_replace("\n", ", ", $crawl->url)); ?></td>
+                                <td>
+
+                                    <span class="material-icons" title="Base URL">link</span><?php echo htmlspecialchars($crawl->base_url); ?>
+
+                                    <?php if ($crawl->start_url != '') : ?>
+                                        <br /><span class="material-icons" title="Start URL">start</span><?php echo htmlspecialchars($crawl->start_url); ?>
+                                    <?php endif; ?>
+
+                                </td>
                                 <td><?php echo htmlspecialchars($crawl->number_of_pages); ?></td>
                                 <td><?php echo htmlspecialchars($crawl->crawl_frequency); ?></td>
                                 <td><?php echo $crawl->last_crawled_at > 0 ? date('Y-m-d H:i:s', $crawl->last_crawled_at) : 'Never'; ?></td>
