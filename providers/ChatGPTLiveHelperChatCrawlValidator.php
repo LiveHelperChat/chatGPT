@@ -91,11 +91,6 @@ class ChatGPTLiveHelperChatCrawlValidator {
             $item->crawl_frequency = $form->crawl_frequency;
         }
 
-        // Validate URL format
-        if (isset($item->url) && !empty($item->url) && !filter_var($item->url, FILTER_VALIDATE_URL)) {
-            $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/validator', 'Please enter a valid URL');
-        }
-
         // Validate crawl frequency
         if (isset($item->crawl_frequency) && (!is_numeric($item->crawl_frequency) || $item->crawl_frequency <= 0)) {
             $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/validator', 'Crawl frequency should be a positive number representing hours');
@@ -131,6 +126,24 @@ class ChatGPTLiveHelperChatCrawlValidator {
                 // Clear the file_id since we've deleted the old file
                 $crawl->file_id = '';
             }
+
+            // If there's an existing LHC file, we should remove it
+            if (!empty($crawl->lhc_file_id)) {
+                try {
+                    // Fetch the file by ID
+                    $fileData = \erLhcoreClassModelChatFile::fetch($crawl->lhc_file_id);
+                    if ($fileData instanceof \erLhcoreClassModelChatFile) {
+                        // Remove the file from the system
+                        $fileData->removeThis();
+                    }
+                } catch (\Exception $e) {
+                    // Log error but continue with the process
+                    \erLhcoreClassLog::write('Error removing LHC file: ' . $e->getMessage());
+                }
+                
+                // Clear the lhc_file_id since we've deleted the old file
+                $crawl->lhc_file_id = null;
+            }
             
             // If new file content and name are provided, upload the new file
             if ($fileContent !== null && $fileName !== null) {
@@ -150,6 +163,12 @@ class ChatGPTLiveHelperChatCrawlValidator {
                         $crawl->file_id = $responseFile['id'];
                         $crawl->last_crawled_at = time();
                         $crawl->status = \LiveHelperChatExtension\chatgpt\providers\erLhcoreClassModelChatGPTCrawl::STATUS_COMPLETED;
+
+                        // Also upload to LHC file system
+                        $lhcFileId = self::uploadFileToLHC($fileContent, $fileName, $crawl);
+                        if ($lhcFileId > 0) {
+                            $crawl->lhc_file_id = $lhcFileId;
+                        }
                     }
                 } else {
                     throw new \Exception('Failed to upload file: ' . (isset($responseFile['error']) ? json_encode($responseFile['error']) : 'Unknown error'));
@@ -170,6 +189,73 @@ class ChatGPTLiveHelperChatCrawlValidator {
             // Log error
             \erLhcoreClassLog::write(print_r($e->getMessage(), true));
             return false;
+        }
+    }
+
+    /**
+     * Uploads a file to the LHC file system
+     * 
+     * @param string $fileContent The content of the file
+     * @param string $fileName The name of the file
+     * @param string $crawlName The name of the crawl (for reference)
+     * @return int The ID of the uploaded file, or 0 if failed
+     */
+    public static function uploadFileToLHC($fileContent, $fileName, $crawl)
+    {
+        try {
+            // Create a temporary file
+            $tempFilePath = 'var/tmpfiles/' . uniqid() . '-' . md5($fileName);
+            if (file_put_contents($tempFilePath, $fileContent) === false) {
+                return 0;
+            }
+
+            // Create a new chat file object
+            $chatFile = new \erLhcoreClassModelChatFile();
+            $chatFile->size = filesize($tempFilePath);
+            $chatFile->type = mime_content_type($tempFilePath);
+            $chatFile->name = md5($fileName);
+            $chatFile->date = time();
+            $chatFile->user_id = 0; // System upload
+            $chatFile->upload_name = "[Crawl: " . $crawl->name . "] " . $fileName;
+            $chatFile->extension = strtolower(end(explode('.',$fileName)));
+            $chatFile->persistent = 1;
+
+            // Generate a file path based on LHC conventions
+            $dir = 'var/storage/'.date('Y').'y/'.date('m').'/'.date('d').'/carwl-'. $crawl->id . '/';
+            
+            // Make sure the directory exists
+            \erLhcoreClassFileUpload::mkdirRecursive($dir);
+            
+            // Generate a file name
+            $chatFile->file_path = $dir;
+            
+            // Move the file to its final destination
+            if (rename($tempFilePath, $chatFile->file_path . md5($fileName))) {
+                // Change file permission
+                chmod($chatFile->file_path . md5($fileName), 0644);
+                
+                // Save the file object
+                $chatFile->saveThis();
+                
+                return $chatFile->id;
+            }
+            
+            // Clean up if the move failed
+            if (file_exists($tempFilePath)) {
+                unlink($tempFilePath);
+            }
+            
+            return 0;
+            
+        } catch (\Exception $e) {
+            \erLhcoreClassLog::write('Error uploading file to LHC: ' . $e->getMessage());
+            
+            // Clean up any temporary file
+            if (isset($tempFilePath) && file_exists($tempFilePath)) {
+                unlink($tempFilePath);
+            }
+            
+            return 0;
         }
     }
 }

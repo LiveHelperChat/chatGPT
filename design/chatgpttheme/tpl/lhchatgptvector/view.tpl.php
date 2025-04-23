@@ -160,10 +160,17 @@
                         <?php foreach ($crawls as $crawl) : ?>
                             <tr>
                                 <td>
-                                    <a href="#" title="<?php echo htmlspecialchars($crawl->file_id); ?>" onclick="lhc.revealModal({'url':WWW_DIR_JAVASCRIPT +'chatgptvector/editcrawl/<?php echo htmlspecialchars($storage_id)?>/<?php echo $crawl->id?>'})" ><?php echo htmlspecialchars($crawl->name); ?></a>
                                     <?php if ($crawl->file_id != '') : ?>
                                             <span class="material-icons" title="File ID: <?php echo htmlspecialchars($crawl->file_id); ?>">description</span>
                                     <?php endif; ?>
+                                    <?php if ($crawl->lhc_file_id > 0) : ?>
+                                        <?php  $fileData = erLhcoreClassModelChatFile::fetch($crawl->lhc_file_id); if ($fileData instanceof erLhcoreClassModelChatFile) :  ?>
+                                            <a href="<?php echo erLhcoreClassDesign::baseurl('file/downloadfile')?>/<?php echo $fileData->id?>/<?php echo $fileData->security_hash?>" target="_blank">
+                                                <span class="material-icons" title="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Download local copy')?>">download</span>
+                                            </a>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                    <a href="#" title="<?php echo htmlspecialchars($crawl->file_id); ?>" onclick="lhc.revealModal({'url':WWW_DIR_JAVASCRIPT +'chatgptvector/editcrawl/<?php echo htmlspecialchars($storage_id)?>/<?php echo $crawl->id?>'})" > <span class="material-icons" title="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Edit')?>">edit</span><?php echo htmlspecialchars($crawl->name); ?></a>
                                 </td>
                                 <td>
 

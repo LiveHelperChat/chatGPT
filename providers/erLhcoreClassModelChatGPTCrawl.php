@@ -62,6 +62,22 @@ class erLhcoreClassModelChatGPTCrawl
         return $items;
     }
 
+    public function beforeRemove()
+    {
+        // Remove any associated files or data if necessary
+        // For example, you might want to delete the file associated with this crawl
+        if (empty($this->lhc_file_id)) {
+            return;
+        }
+
+        $fileData = \erLhcoreClassModelChatFile::fetch($this->lhc_file_id);
+
+        if ($fileData instanceof \erLhcoreClassModelChatFile) {
+            // Remove the file from the system
+            $fileData->removeThis();
+        }
+    }
+
     public function getState()
     {
         return array(
@@ -71,6 +87,7 @@ class erLhcoreClassModelChatGPTCrawl
             'url' => $this->url,
             'number_of_pages' => $this->number_of_pages,
             'file_id' => $this->file_id,
+            'lhc_file_id' => $this->lhc_file_id,
             'crawl_frequency' => $this->crawl_frequency,
             'last_crawled_at' => $this->last_crawled_at,
             'status' => $this->status,
@@ -86,6 +103,7 @@ class erLhcoreClassModelChatGPTCrawl
     public $url = '';
     public $number_of_pages = 0;
     public $file_id = '';
+    public $lhc_file_id = 0;
     public $crawl_frequency = '';
     public $last_crawled_at = 0;
     public $base_url = '';
