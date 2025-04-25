@@ -34,7 +34,7 @@
         <p>
             <small>
                 <i>
-                    <?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','API key used for authentication of pending crawl requests. Enter random alphanumeric string.');?>. <a target="_blank" href="https://github.com/LiveHelperChat/crawler-to-md?tab=readme-ov-file#integration-with-chatgpt-extension"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','Crawler setup instructions.');?></a>
+                    <?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','API key used for authentication of pending crawl requests. Enter random alphanumeric string.');?> <a target="_blank" href="https://github.com/LiveHelperChat/crawler-to-md?tab=readme-ov-file#integration-with-chatgpt-extension"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','Crawler setup instructions.');?></a>
                 </i>
             </small>
         </p>
