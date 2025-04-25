@@ -40,7 +40,7 @@
                                     <div class="col-md-3 col-sm-6">
                                         <div class="info-box bg-info rounded text-white ps-1">
                                             <div class="info-box-content">
-                                                <span class="info-box-text text-white">Total</span>
+                                                <span class="info-box-text text-white pe-1">Total</span>
                                                 <span class="info-box-number text-white"><?php echo $storage['file_counts']['total']; ?></span>
                                             </div>
                                         </div>
@@ -48,7 +48,7 @@
                                     <div class="col-md-3 col-sm-6">
                                         <div class="info-box bg-success text-white ps-1 rounded">
                                             <div class="info-box-content">
-                                                <span class="info-box-text">Completed</span>
+                                                <span class="info-box-text pe-1">Completed</span>
                                                 <span class="info-box-number"><?php echo $storage['file_counts']['completed']; ?></span>
                                             </div>
                                         </div>
@@ -56,7 +56,7 @@
                                     <div class="col-md-3 col-sm-6">
                                         <div class="info-box bg-warning text-white ps-1 rounded">
                                             <div class="info-box-content">
-                                                <span class="info-box-text">In Progress</span>
+                                                <span class="info-box-text pe-1">In Progress</span>
                                                 <span class="info-box-number"><?php echo $storage['file_counts']['in_progress']; ?></span>
                                             </div>
                                         </div>
@@ -64,7 +64,7 @@
                                     <div class="col-md-3 col-sm-6">
                                         <div class="info-box bg-danger text-white ps-1 rounded">
                                             <div class="info-box-content">
-                                                <span class="info-box-text">Failed</span>
+                                                <span class="info-box-text pe-1">Failed</span>
                                                 <span class="info-box-number"><?php echo $storage['file_counts']['failed']; ?></span>
                                             </div>
                                         </div>
