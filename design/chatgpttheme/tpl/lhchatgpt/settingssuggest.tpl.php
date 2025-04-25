@@ -12,13 +12,18 @@
         <div class="col-6">
             <div class="form-group">
                 <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','Project API Key');?></label>
-                <input type="text" class="form-control form-control-sm" name="project_api_key" value="<?php echo htmlspecialchars($chatgpt_suggest['project_api_key'])?>" />
+                <input type="text" class="form-control form-control-sm" name="project_api_key" value="<?php echo htmlspecialchars($chatgpt_suggest['project_api_key'] ?? '')?>" />
             </div>
         </div>
         <div class="col-6">
             <div class="form-group">
                 <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','Vector storage ID');?></label>
-                <input type="text" class="form-control form-control-sm" name="vstorage_id" value="<?php echo htmlspecialchars($chatgpt_suggest['vstorage_id'])?>" />
+                <input type="text" class="form-control form-control-sm" name="vstorage_id" value="<?php echo htmlspecialchars($chatgpt_suggest['vstorage_id'] ?? '')?>" />
+                <small>
+                    <i>
+                        <?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','Used as default storage for answer suggestions.');?>
+                    </i>
+                </small>
             </div>
         </div>
     </div>
@@ -26,22 +31,28 @@
     <div class="form-group">
         <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','Crawl API Key');?></label>
         <input type="text" class="form-control form-control-sm" name="crawl_api_key" value="<?php echo htmlspecialchars($chatgpt_suggest['crawl_api_key'] ?? '')?>" />
-        <p><small><i><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','API key used for authentication of pending crawl requests');?></i></small></p>
+        <p>
+            <small>
+                <i>
+                    <?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','API key used for authentication of pending crawl requests. Enter any alphanumeric random string.');?>. <a target="_blank" href="https://github.com/LiveHelperChat/crawler-to-md?tab=readme-ov-file#integration-with-chatgpt-extension"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','Crawler setup instructions.');?></a>
+                </i>
+            </small>
+        </p>
     </div>
 
     <div class="form-group">
-        <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','System instructions');?></label>
-        <textarea class="form-control form-control-sm" name="system_instructions"><?php echo htmlspecialchars($chatgpt_suggest['system_instructions'])?></textarea>
+        <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','System instructions for answer suggestions.');?></label>
+        <textarea class="form-control form-control-sm" name="system_instructions"><?php echo htmlspecialchars($chatgpt_suggest['system_instructions'] ?? '')?></textarea>
     </div>
 
     <div class="form-group">
         <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Default model')?></label>
-        <input type="text" name="model" placeholder="Default - gpt-4o-mini" value="<?php isset($chatgpt_suggest['model']) ? print htmlspecialchars($chatgpt_suggest['model']) : ''?>"  class="form-control form-control-sm" />
+        <input type="text" name="model" placeholder="Default - gpt-4o-mini" value="<?php echo htmlspecialchars($chatgpt_suggest['model'] ?? '')?>"  class="form-control form-control-sm" />
     </div>
 
     <div class="form-group">
         <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Send to AI only last n messages'); ?></label>
-        <input type="text" name="limit_last" placeholder="5" class="form-control form-control-sm" value="<?php isset($chatgpt_suggest['limit_last']) ? print htmlspecialchars($chatgpt_suggest['limit_last']) : ''?>" />
+        <input type="text" name="limit_last" placeholder="5" class="form-control form-control-sm" value="<?php echo htmlspecialchars($chatgpt_suggest['limit_last'] ??  '')?>" />
     </div>
 
     <div class="form-group">
