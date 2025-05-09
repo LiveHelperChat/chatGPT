@@ -217,7 +217,8 @@ class ChatGPTLiveHelperChatCrawlValidator {
             $chatFile->date = time();
             $chatFile->user_id = 0; // System upload
             $chatFile->upload_name = "[Crawl: " . $crawl->name . "] " . $fileName;
-            $chatFile->extension = strtolower(end(explode('.',$fileName)));
+            $array = explode('.', $fileName);
+            $chatFile->extension = strtolower(end($array));
             $chatFile->persistent = 1;
 
             // Generate a file path based on LHC conventions
