@@ -52,8 +52,16 @@ try {
                 throw new Exception('Failed to read uploaded file');
             }
 
-            // Get file name from POST or use the uploaded filename
-            $fileName = (!empty($_POST['file_name'])) ? $_POST['file_name'] : $crawl->name . '.md';
+            // Get file extension from uploaded file
+            $uploadedFileExtension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+            $keepOriginalExtension = in_array(strtolower($uploadedFileExtension), ['json', 'pdf']);
+
+            // Get file name from POST or use the uploaded filename with appropriate extension
+            if (!empty($_POST['file_name'])) {
+                $fileName = $_POST['file_name'];
+            } else {
+                $fileName = $crawl->name . ($keepOriginalExtension ? '.' . $uploadedFileExtension : '.md');
+            }
 
             // Use the ChatGPTLiveHelperChatCrawlValidator to handle file management
             $success = \LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatCrawlValidator::updateCrawlStatus($crawl, $fileContent, $fileName);
