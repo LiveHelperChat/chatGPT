@@ -52,6 +52,22 @@
         "key": "MUL",
         "default": "0",
         "extra": ""
+      },
+      {
+        "field": "type",
+        "type": "tinyint(1) unsigned",
+        "null": "NO",
+        "key": "MUL",
+        "default": "0",
+        "extra": ""
+      },
+      {
+        "field": "content",
+        "type": "longtext",
+        "null": "NO",
+        "key": "MUL",
+        "default": "",
+        "extra": ""
       }
     ]
   },
@@ -61,6 +77,6 @@
   },
   "tables_create": {
     "lhc_chatgpt_invalid" : "CREATE TABLE `lhc_chatgpt_invalid` (`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT, `reviewed` tinyint(1) unsigned NOT NULL DEFAULT 0, `aid` bigint(20) unsigned NOT NULL, `chat_id` bigint(20) unsigned NOT NULL, `ctime` bigint(20) unsigned NOT NULL, `user_id` bigint(20) unsigned NOT NULL,  `question` longtext COLLATE utf8mb4_unicode_ci NOT NULL, `answer` longtext COLLATE utf8mb4_unicode_ci NOT NULL,  PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci\n",
-    "lhc_chatgpt_crawl" : "CREATE TABLE `lhc_chatgpt_crawl` (\n                                     `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,\n                                     `crawl_frequency` int(11) DEFAULT NULL,\n                                     `last_crawled_at` bigint(20) unsigned DEFAULT NULL,\n                                     `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n                                     `vector_storage_id` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n                                     `url` text COLLATE utf8mb4_unicode_ci NOT NULL,\n                                     `number_of_pages` int(11) unsigned DEFAULT NULL,\n                                     `file_id` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n                                     `status` tinyint(1) unsigned NOT NULL DEFAULT 0,\n                                     `base_url` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,\n                                     `start_url` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,\n                                     `max_pages` int(11) unsigned NOT NULL DEFAULT 0,\n                                     PRIMARY KEY (`id`),\n                                     KEY `status_last_crawled_at` (`status`,`last_crawled_at`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;\n"
+    "lhc_chatgpt_crawl" : "CREATE TABLE `lhc_chatgpt_crawl` (\n                                     `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT, `type` tinyint(1) unsigned NOT NULL DEFAULT '0', `content` longtext NOT NULL DEFAULT '', `crawl_frequency` int(11) DEFAULT NULL,\n                                     `last_crawled_at` bigint(20) unsigned DEFAULT NULL,\n                                     `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n                                     `vector_storage_id` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n                                     `url` text COLLATE utf8mb4_unicode_ci NOT NULL,\n                                     `number_of_pages` int(11) unsigned DEFAULT NULL,\n                                     `file_id` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n                                     `status` tinyint(1) unsigned NOT NULL DEFAULT 0,\n                                     `base_url` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,\n                                     `start_url` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,\n                                     `max_pages` int(11) unsigned NOT NULL DEFAULT 0,\n                                     PRIMARY KEY (`id`),\n                                     KEY `status_last_crawled_at` (`status`,`last_crawled_at`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;\n"
   }
 }

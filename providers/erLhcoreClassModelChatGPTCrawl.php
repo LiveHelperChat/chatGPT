@@ -45,7 +45,8 @@ class erLhcoreClassModelChatGPTCrawl
                             ($currentTime . ' - ' . $q->expr->mul('crawl_frequency', 3600))
                         )
                     )
-                )
+                ),
+                $q->expr->eq('type', self::TYPE_CRAWL)
             );
             
         $stmt = $q->prepare();
@@ -94,8 +95,13 @@ class erLhcoreClassModelChatGPTCrawl
             'base_url' => $this->base_url,
             'start_url' => $this->start_url,
             'max_pages' => $this->max_pages,
+            'type' => $this->type,
+            'content' => $this->content,
         );
     }
+
+    const TYPE_CRAWL = 0;
+    const TYPE_CONTENT = 1;
 
     public $id = null;
     public $name = '';
@@ -109,6 +115,8 @@ class erLhcoreClassModelChatGPTCrawl
     public $base_url = '';
     public $start_url = '';
     public $max_pages = 0;
+    public $type = self::TYPE_CRAWL; // 0 - crawl, 1 - file
+    public $content = '';
     public $status = self::STATUS_IDLE; // 0 - idle, 1 - crawling, 2 - error
 }
 

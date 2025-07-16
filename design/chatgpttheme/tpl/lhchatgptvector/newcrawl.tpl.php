@@ -1,6 +1,6 @@
 <?php
 $modalHeaderClass = 'pt-1 pb-1 ps-2 pe-2';
-$modalHeaderTitle = erTranslationClassLhTranslation::getInstance()->getTranslation('chat/chatpreview','New Crawler');
+$modalHeaderTitle = erTranslationClassLhTranslation::getInstance()->getTranslation('chat/chatpreview','New Crawler/Content');
 $modalSize = 'xl';
 $modalBodyClass = 'p-1'
 ?>

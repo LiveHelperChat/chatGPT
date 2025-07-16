@@ -80,5 +80,11 @@ $ViewList['resetcrawl'] = array(
     'functions' => array('configure'),
 );
 
+$ViewList['processcontent'] = array(
+    'params' => array('storage_id', 'crawl_id'),
+    'uparams' => array('csfr'),
+    'functions' => array('configure'),
+);
+
 $FunctionList['configure'] = array('explain' => 'Allow operator to configure ChatGPT Vector storage');
 

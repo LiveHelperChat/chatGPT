@@ -139,7 +139,7 @@
     <div class="col-12">
         <div class="card card-outline card-primary">
             <div class="card-header">
-                <h3 class="card-title">Crawls</h3>
+                <h3 class="card-title">Crawls/Content</h3>
             </div>
             <div class="card-body">
 
@@ -148,7 +148,8 @@
                         <thead>
                         <tr>
                             <th>Name</th>
-                            <th>URL</th>
+                            <th>Type</th>
+                            <th>URL/Content</th>
                             <th>Number of Pages</th>
                             <th>Crawl Frequency</th>
                             <th>Last Crawled</th>
@@ -173,13 +174,27 @@
                                     <a href="#" title="<?php echo htmlspecialchars($crawl->file_id); ?>" onclick="lhc.revealModal({'url':WWW_DIR_JAVASCRIPT +'chatgptvector/editcrawl/<?php echo htmlspecialchars($storage_id)?>/<?php echo $crawl->id?>'})" > <span class="material-icons" title="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Edit')?>">edit</span><?php echo htmlspecialchars($crawl->name); ?></a>
                                 </td>
                                 <td>
-
-                                    <span class="material-icons" title="Base URL">link</span><?php echo htmlspecialchars($crawl->base_url); ?>
-
-                                    <?php if ($crawl->start_url != '') : ?>
-                                        <br /><span class="material-icons" title="Start URL">start</span><?php echo htmlspecialchars($crawl->start_url); ?>
+                                    <?php if ($crawl->type == \LiveHelperChatExtension\chatgpt\providers\erLhcoreClassModelChatGPTCrawl::TYPE_CONTENT): ?>
+                                        <span class="badge bg-info">Content</span>
+                                    <?php else: ?>
+                                        <span class="badge bg-primary">Crawler</span>
                                     <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?php if ($crawl->type == \LiveHelperChatExtension\chatgpt\providers\erLhcoreClassModelChatGPTCrawl::TYPE_CONTENT): ?>
+                                        <div class="content-preview" style="max-width: 300px;">
+                                            <span class="material-icons" title="Content">article</span>
+                                            <span title="<?php echo htmlspecialchars($crawl->content); ?>">
+                                                <?php echo htmlspecialchars(strlen($crawl->content) > 10 ? substr($crawl->content, 0, 10) . '...' : $crawl->content); ?>
+                                            </span>
+                                        </div>
+                                    <?php else: ?>
+                                        <span class="material-icons" title="Base URL">link</span><?php echo htmlspecialchars($crawl->base_url); ?>
 
+                                        <?php if ($crawl->start_url != '') : ?>
+                                            <br /><span class="material-icons" title="Start URL">start</span><?php echo htmlspecialchars($crawl->start_url); ?>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
                                 </td>
                                 <td><?php echo htmlspecialchars($crawl->number_of_pages); ?></td>
                                 <td><?php echo htmlspecialchars($crawl->crawl_frequency); ?></td>
@@ -198,7 +213,12 @@
                                     <?php endif; ?>
                                 </td>
                                 <td>
+                                    <?php if ($crawl->type != \LiveHelperChatExtension\chatgpt\providers\erLhcoreClassModelChatGPTCrawl::TYPE_CONTENT): ?>
                                     <a class="btn btn-xs btn-warning csfr-required me-1" onclick="return confirm('Reset crawl status?')" href="<?php echo erLhcoreClassDesign::baseurl('chatgptvector/resetcrawl')?>/<?php echo htmlspecialchars($storage_id)?>/<?php echo $crawl->id?>"><i class="material-icons me-0">refresh</i></a>
+                                    <?php endif; ?>
+                                    <?php if ($crawl->type == \LiveHelperChatExtension\chatgpt\providers\erLhcoreClassModelChatGPTCrawl::TYPE_CONTENT): ?>
+                                        <a class="btn btn-xs btn-success csfr-required me-1" onclick="return confirm('Process content now?')" href="<?php echo erLhcoreClassDesign::baseurl('chatgptvector/processcontent')?>/<?php echo htmlspecialchars($storage_id)?>/<?php echo $crawl->id?>" title="Process Content"><i class="material-icons me-0">play_arrow</i></a>
+                                    <?php endif; ?>
                                     <a class="btn btn-xs btn-danger csfr-required" onclick="return confirm('Are you sure?')" href="<?php echo erLhcoreClassDesign::baseurl('chatgptvector/deletecrawl')?>/<?php echo htmlspecialchars($storage_id)?>/<?php echo $crawl->id?>"><i class="material-icons me-0">&#xE872;</i></a>
                                 </td>
                             </tr>

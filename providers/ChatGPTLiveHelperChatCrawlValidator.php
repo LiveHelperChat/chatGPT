@@ -19,74 +19,104 @@ class ChatGPTLiveHelperChatCrawlValidator {
             'base_url' => new \ezcInputFormDefinitionElement(\ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'),
             'max_pages' => new \ezcInputFormDefinitionElement(\ezcInputFormDefinitionElement::OPTIONAL, 'int', ['min_range' => 0]),
             'crawl_frequency' => new \ezcInputFormDefinitionElement(\ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'),
+            'type' => new \ezcInputFormDefinitionElement(\ezcInputFormDefinitionElement::OPTIONAL, 'int'),
+            'content' => new \ezcInputFormDefinitionElement(\ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'),
         );
 
         $form = new \ezcInputForm(INPUT_POST, $definition);
         $errors = array();
 
+        // Validate name
         if ($form->hasValidData('name') && $form->name != '') {
             $item->name = $form->name;
         } else {
             $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/new', 'Please enter a name for the crawler');
         }
 
-        if ($form->hasValidData('max_pages')) {
-            $item->max_pages = $form->max_pages;
+        // Validate type
+        if ($form->hasValidData('type')) {
+            $item->type = $form->type;
         } else {
-            $item->max_pages = 0;
+            $item->type = \LiveHelperChatExtension\chatgpt\providers\erLhcoreClassModelChatGPTCrawl::TYPE_CRAWL;
         }
 
-        // Validate start_url
-        if ($form->hasValidData('start_url') && $form->start_url != '') {
-            if (filter_var($form->start_url, FILTER_VALIDATE_URL)) {
-                $item->start_url = $form->start_url;
+        // Validate based on type
+        if ($item->type == \LiveHelperChatExtension\chatgpt\providers\erLhcoreClassModelChatGPTCrawl::TYPE_CONTENT) {
+            // Content type validation
+            if ($form->hasValidData('content') && $form->content != '') {
+                $item->content = $form->content;
             } else {
-                $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/validator', 'Please enter a valid start URL');
+                $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/new', 'Please enter content for the content type');
             }
-        } else {
+            
+            // For content type, we don't need URL validation, but we clear the URL fields
+            $item->url = '';
+            $item->base_url = '';
             $item->start_url = '';
-        }
+            $item->max_pages = 0;
+        } else {
+            // Crawler type validation
+            $item->content = ''; // Clear content for crawler type
+            
+            if ($form->hasValidData('max_pages')) {
+                $item->max_pages = $form->max_pages;
+            } else {
+                $item->max_pages = 0;
+            }
 
-        // Validate base_url
-        if ($form->hasValidData('base_url') && $form->base_url != '') {
-            if (filter_var($form->base_url, FILTER_VALIDATE_URL)) {
-                $item->base_url = $form->base_url;
+            // Validate start_url
+            if ($form->hasValidData('start_url') && $form->start_url != '') {
+                if (filter_var($form->start_url, FILTER_VALIDATE_URL)) {
+                    $item->start_url = $form->start_url;
+                } else {
+                    $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/validator', 'Please enter a valid start URL');
+                }
+            } else {
+                $item->start_url = '';
+            }
+
+            // Validate base_url
+            if ($form->hasValidData('base_url') && $form->base_url != '') {
+                if (filter_var($form->base_url, FILTER_VALIDATE_URL)) {
+                    $item->base_url = $form->base_url;
+                } else {
+                    $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/validator', 'Please enter a valid base URL');
+                }
             } else {
                 $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/validator', 'Please enter a valid base URL');
             }
-        } else {
-            $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/validator', 'Please enter a valid base URL');
-        }
 
-        if ($form->hasValidData('url') && $form->url != '') {
-            $urls = preg_split('/\r\n|\r|\n/', $form->url);
-            $invalidUrls = [];
-            $validUrls = [];
+            if ($form->hasValidData('url') && $form->url != '') {
+                $urls = preg_split('/\r\n|\r|\n/', $form->url);
+                $invalidUrls = [];
+                $validUrls = [];
 
-            foreach ($urls as $url) {
-                $url = trim($url);
-                if (!empty($url)) {
-                    if (filter_var($url, FILTER_VALIDATE_URL)) {
-                        $validUrls[] = $url;
-                    } else {
-                        $invalidUrls[] = $url;
+                foreach ($urls as $url) {
+                    $url = trim($url);
+                    if (!empty($url)) {
+                        if (filter_var($url, FILTER_VALIDATE_URL)) {
+                            $validUrls[] = $url;
+                        } else {
+                            $invalidUrls[] = $url;
+                        }
                     }
                 }
-            }
 
-            if (!empty($invalidUrls)) {
-                $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/validator', 'Some URLs are invalid: ') . implode(', ', $invalidUrls);
-            }
+                if (!empty($invalidUrls)) {
+                    $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/validator', 'Some URLs are invalid: ') . implode(', ', $invalidUrls);
+                }
 
-            if (!empty($validUrls)) {
-                $item->url = implode("\n", $validUrls);
+                if (!empty($validUrls)) {
+                    $item->url = implode("\n", $validUrls);
+                } else {
+                    $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/new', 'Please enter at least one valid URL to crawl');
+                }
             } else {
-                $errors[] = \erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/new', 'Please enter at least one valid URL to crawl');
+                $item->url = '';
             }
-        } else {
-            $item->url = '';
         }
 
+        // Validate crawl frequency (applies to both types)
         if ($form->hasValidData('crawl_frequency')) {
             $item->crawl_frequency = $form->crawl_frequency;
         }
