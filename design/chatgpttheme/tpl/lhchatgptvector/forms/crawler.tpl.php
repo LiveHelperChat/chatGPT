@@ -61,7 +61,7 @@
     <div class="tab-pane fade <?php echo (isset($item->type) && $item->type == \LiveHelperChatExtension\chatgpt\providers\erLhcoreClassModelChatGPTCrawl::TYPE_CONTENT) ? 'show active' : ''; ?>" id="content-tab" role="tabpanel">
         <div class="form-group">
             <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/new', 'Content'); ?>*</label>
-            <textarea class="form-control" rows="10" name="content" placeholder="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/new', 'Enter your content here...'); ?>"><?php echo htmlspecialchars($item->content ?? ''); ?></textarea>
+            <textarea class="form-control" rows="25" name="content" placeholder="<?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/new', 'Enter your content here...'); ?>"><?php echo htmlspecialchars($item->content ?? ''); ?></textarea>
             <p class="text-muted fs12 mb0 pb0"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('lhchatgptcrawl/new', 'Enter the content that you want to make searchable'); ?></p>
         </div>
     </div>
