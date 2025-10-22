@@ -18,10 +18,14 @@
         <div class="col-6">
             <div class="form-group">
                 <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','Vector storage ID');?></label>
-                <input type="text" class="form-control form-control-sm" name="vstorage_id" value="<?php echo htmlspecialchars($chatgpt_suggest['vstorage_id'] ?? '')?>" />
+                <input placeholder='vs_93LshoiTb6qDyGyPiF0jFG55 or {"default":"vs_93LshoiTb6qDyGyPiF0jFG55","dep_id":"vs_93LshoiTb6qDyGyPiF0jFG45"}' type="text" class="form-control form-control-sm" name="vstorage_id" value="<?php echo htmlspecialchars($chatgpt_suggest['vstorage_id'] ?? '')?>" />
                 <small>
                     <i>
                         <?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','Used as default storage for answer suggestions.');?>
+                        <ul>
+                            <li>Same vector storage for all chats - <code>vs_93LshoiTb6qDyGyPiF0jFG55</code></li>
+                            <li>E.g default defined and for department with ID 2 custom vector storage id<br /><code>{"default":"vs_93LshoiTb6qDyGyPiF0jFG55","2":"vs_93LshoiTb6qDyGyPiF0jFG45"}</code></li>
+                        </ul>
                     </i>
                 </small>
             </div>

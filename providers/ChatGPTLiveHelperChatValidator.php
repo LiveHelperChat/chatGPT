@@ -6,7 +6,7 @@ class ChatGPTLiveHelperChatValidator {
 
     public static $requestLog = [];
 
-    public static function retrieveMessage($question)
+    public static function retrieveMessage($question, $department_id = 0)
     {
         $sjOptions = \erLhcoreClassModelChatConfig::fetch('chatgpt_suggest');
         $data = (array)$sjOptions->data;
@@ -15,6 +15,18 @@ class ChatGPTLiveHelperChatValidator {
 
         if (empty($apiKey)) {
             throw new \Exception('OpenAI API key is not configured!');
+        }
+
+        $vectorStorageData = json_decode($data['vstorage_id'],true);
+
+        if (is_array($vectorStorageData)) {
+            if (isset($vectorStorageData[$department_id])) {
+                $vectorStorageId = $vectorStorageData[$department_id];
+            } else {
+                $vectorStorageId = $vectorStorageData['default'];
+            }
+        } else {
+            $vectorStorageId = $data['vstorage_id'];
         }
 
         $model = !empty($data['model']) ? $data['model'] : 'gpt-4o-mini';
@@ -39,7 +51,7 @@ class ChatGPTLiveHelperChatValidator {
             'tools' => [
                 [
                     "type" => "file_search",
-                    "vector_store_ids" => [$data['vstorage_id']]
+                    "vector_store_ids" => [$vectorStorageId]
                 ]
             ]
         ]);
