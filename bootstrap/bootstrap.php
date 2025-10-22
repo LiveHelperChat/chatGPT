@@ -27,10 +27,6 @@ class erLhcoreClassExtensionChatgpt
             'loadInitialData'
         ));
 
-        $dispatcher->listen('chat.delete', array(
-            $this,
-            'chatDelete'
-        ));
     }
 
     public static function getSession()
@@ -45,13 +41,6 @@ class erLhcoreClassExtensionChatgpt
         $sjOptions = \erLhcoreClassModelChatConfig::fetch('chatgpt_suggest');
         $data = (array)$sjOptions->data;
         $params['lists']['lhcchatgpt'] = array('enabled' => erLhcoreClassUser::instance()->hasAccessTo('lhchatgpt','auto_suggester') && isset($data['chat_auto_suggester']) && $data['chat_auto_suggester'] == '1');
-    }
-
-    public function chatDelete($params) {
-        $db = ezcDbInstance::get();
-        $stmt = $db->prepare('DELETE FROM lhc_chatgpt_chat WHERE chat_id = :chat_id');
-        $stmt->bindValue(':chat_id', $params['chat']->id, PDO::PARAM_INT);
-        $stmt->execute();
     }
 
     public function syncAdmin($params) 
