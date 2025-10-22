@@ -6,7 +6,7 @@ class ChatGPTLiveHelperChatValidator {
 
     public static $requestLog = [];
 
-    public static function retrieveMessage($question, $department_id = 0)
+    public static function retrieveMessage($question, $department_id = 'default')
     {
         $sjOptions = \erLhcoreClassModelChatConfig::fetch('chatgpt_suggest');
         $data = (array)$sjOptions->data;
@@ -108,7 +108,15 @@ class ChatGPTLiveHelperChatValidator {
         try {
             $response = ['found' => false, 'msg' => '', 'aid' => null];
             $response['found'] = true;
-            $response['msg'] = self::retrieveMessage($question);
+
+            $department_id = 0;
+
+            if ($chat_id > 0) {
+                $chat = \erLhcoreClassModelChat::fetch($chat_id);
+                $department_id = is_object($chat) ? $chat->dep_id : 0;
+            }
+
+            $response['msg'] = self::retrieveMessage($question, $department_id);
         } catch (\Exception $e) {
             $response['found'] = false;
             $response['error'] = $e->getMessage();
