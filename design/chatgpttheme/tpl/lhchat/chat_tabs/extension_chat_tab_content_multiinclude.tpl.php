@@ -1,4 +1,4 @@
-<?php if (erLhcoreClassModelChatConfig::fetch('chatgpt_suggest')->data['chat_reply_tab'] == 1) : ?>
+<?php if (erLhcoreClassModule::getExtensionInstance('erLhcoreClassExtensionChatgpt')->settings['suggester'] === true && erLhcoreClassModelChatConfig::fetch('chatgpt_suggest')->data['chat_reply_tab'] == 1) : ?>
 <div role="tabpanel" class="tab-pane" id="chatgpt-<?php echo $chat->id?>">
     <form method="post" action="" method="post" onsubmit="return lhcChatGPT.replyByChat(<?php echo $chat->id?>)">
 

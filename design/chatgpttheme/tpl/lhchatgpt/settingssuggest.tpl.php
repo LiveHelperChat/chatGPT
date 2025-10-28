@@ -18,20 +18,25 @@
         <div class="col-6">
             <div class="form-group">
                 <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','Vector storage ID');?></label>
-                <input placeholder='vs_93LshoiTb6qDyGyPiF0jFG55 or {"default":"vs_93LshoiTb6qDyGyPiF0jFG55","dep_id":"vs_93LshoiTb6qDyGyPiF0jFG45"}' type="text" class="form-control form-control-sm" name="vstorage_id" value="<?php echo htmlspecialchars($chatgpt_suggest['vstorage_id'] ?? '')?>" />
+                <input placeholder='<?php if (erLhcoreClassModule::getExtensionInstance('erLhcoreClassExtensionChatgpt')->settings['suggester'] === true) : ?>vs_93LshoiTb6qDyGyPiF0jFG55 or {"default":"vs_93LshoiTb6qDyGyPiF0jFG55","dep_id":"vs_93LshoiTb6qDyGyPiF0jFG45"}<?php else : ?>vs_93LshoiTb6qDyGyPiF0jFG55<?php endif;?>' type="text" class="form-control form-control-sm" name="vstorage_id" value="<?php echo htmlspecialchars($chatgpt_suggest['vstorage_id'] ?? '')?>" />
                 <small>
                     <i>
-                        <?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','Used as default storage for answer suggestions.');?>
-                        <ul>
-                            <li>Same vector storage for all chats - <code>vs_93LshoiTb6qDyGyPiF0jFG55</code></li>
-                            <li>E.g default defined and for department with ID 2 custom vector storage id<br /><code>{"default":"vs_93LshoiTb6qDyGyPiF0jFG55","2":"vs_93LshoiTb6qDyGyPiF0jFG45"}</code></li>
-                        </ul>
+                        <?php if (erLhcoreClassModule::getExtensionInstance('erLhcoreClassExtensionChatgpt')->settings['suggester'] === true) : ?>
+                            <?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','Used as default storage for answer suggestions.');?>
+                            <ul>
+                                <li>Same vector storage for all chats - <code>vs_93LshoiTb6qDyGyPiF0jFG55</code></li>
+                                <li>E.g default defined and for department with ID 2 custom vector storage id<br /><code>{"default":"vs_93LshoiTb6qDyGyPiF0jFG55","2":"vs_93LshoiTb6qDyGyPiF0jFG45"}</code></li>
+                            </ul>
+                        <?php else : ?>
+                            <?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','Used as default storage for test UI.');?>
+                        <?php endif; ?>
                     </i>
                 </small>
             </div>
         </div>
     </div>
 
+    <?php if (erLhcoreClassModule::getExtensionInstance('erLhcoreClassExtensionChatgpt')->settings['crawler'] === true) : ?>
     <div class="form-group">
         <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','Crawl API Key');?></label>
         <input type="text" class="form-control form-control-sm" name="crawl_api_key" value="<?php echo htmlspecialchars($chatgpt_suggest['crawl_api_key'] ?? '')?>" />
@@ -43,9 +48,14 @@
             </small>
         </p>
     </div>
+    <?php endif; ?>
 
     <div class="form-group">
-        <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','System instructions for answer suggestions.');?></label>
+        <?php if (erLhcoreClassModule::getExtensionInstance('erLhcoreClassExtensionChatgpt')->settings['suggester'] === true) : ?>
+            <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','System instructions for answer suggestions.');?></label>
+        <?php else : ?>
+            <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/settings','System instructions for test UI.');?></label>
+        <?php endif; ?>
         <textarea class="form-control form-control-sm" name="system_instructions"><?php echo htmlspecialchars($chatgpt_suggest['system_instructions'] ?? '')?></textarea>
     </div>
 
@@ -60,11 +70,12 @@
     </div>
 
     <div class="form-group">
-        <label><input type="checkbox" name="keep_previous" value="1" <?php if (isset($chatgpt_suggest['keep_previous']) && $chatgpt_suggest['keep_previous'] == 1) : ?>checked="checked"<?php endif;?> /> <?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','On next visitor message keep previous suggestions'); ?></label>
+        <label><input type="checkbox" name="log_request" value="1" <?php if (isset($chatgpt_suggest['log_request']) && $chatgpt_suggest['log_request'] == 1) : ?>checked="checked"<?php endif;?> /> <?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Log request made to AI'); ?></label>
     </div>
 
+    <?php if (erLhcoreClassModule::getExtensionInstance('erLhcoreClassExtensionChatgpt')->settings['suggester'] === true) : ?>
     <div class="form-group">
-        <label><input type="checkbox" name="log_request" value="1" <?php if (isset($chatgpt_suggest['log_request']) && $chatgpt_suggest['log_request'] == 1) : ?>checked="checked"<?php endif;?> /> <?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Log request made to AI'); ?></label>
+        <label><input type="checkbox" name="keep_previous" value="1" <?php if (isset($chatgpt_suggest['keep_previous']) && $chatgpt_suggest['keep_previous'] == 1) : ?>checked="checked"<?php endif;?> /> <?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','On next visitor message keep previous suggestions'); ?></label>
     </div>
 
     <div class="form-group">
@@ -74,6 +85,7 @@
     <div class="form-group">
         <label><input type="checkbox" name="chat_reply_tab" value="1" <?php if (isset($chatgpt_suggest['chat_reply_tab']) && $chatgpt_suggest['chat_reply_tab'] == 1) : ?>checked="checked"<?php endif;?> /> <?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Enable reply prediction tab in chat UI'); ?></label>
     </div>
+    <?php endif; ?>
 
     <button name="StoreOptions" class="btn btn-sm btn-secondary" type="submit"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Save'); ?></button>
 

@@ -26,11 +26,22 @@
                 alert('Please enter a question!');
                 return;
             }
-            
-            $.postJSON(WWW_DIR_JAVASCRIPT + 'chatgpt/getanswer/answer', {'question': question}, function(data){
+
+            $('#chatgpt-answer').html('Loading...');
+
+            const $btn = $(this);
+            const originalText = $btn.text();
+            $btn.prop('disabled', true).text(originalText + '...');
+
+            // Use the returned jqXHR so we can attach always() to re-enable the button
+            const jq = $.postJSON(WWW_DIR_JAVASCRIPT + 'chatgpt/getanswer/answer', {'question': question});
+
+            jq.done(function(data){
                 $('#chatgpt-answer').html(data.response);
             }).fail(function(){
                 alert('request failed');
+            }).always(function(){
+                $btn.prop('disabled', false).text(originalText);
             });
         });
 

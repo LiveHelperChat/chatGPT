@@ -61,7 +61,7 @@ class ChatGPTLiveHelperChatValidator {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Content-Type: application/json',
@@ -76,19 +76,19 @@ class ChatGPTLiveHelperChatValidator {
 
         if ($error) {
             self::$requestLog[] = ['error' => $error];
-            throw new \Exception('CURL Error: ' . $error);
+            throw new \Exception('CURL Error: ' . $error . json_encode($payload));
         }
 
         if ($httpCode != 200) {
             self::$requestLog[] = ['response' => $response, 'http_code' => $httpCode];
-            throw new \Exception('API Error: HTTP code ' . $httpCode);
+            throw new \Exception('API Error: HTTP code ' . $httpCode . json_encode($payload));
         }
 
         $responseData = json_decode($response, true);
 
         if (!isset($responseData['output'][0])) {
             self::$requestLog[] = ['response' => $responseData];
-            throw new \Exception('Invalid response format from OpenAI API');
+            throw new \Exception('Invalid response format from OpenAI API' . json_encode($payload));
         }
 
         foreach ($responseData['output'] as $output) {

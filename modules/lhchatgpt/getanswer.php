@@ -10,8 +10,13 @@ if ($Params['user_parameters']['action'] == 'answer') {
         $chat = erLhcoreClassModelChat::fetch($_POST['chat_id']);
         $departmentId = is_object($chat) ? $chat->dep_id : 0;
     }
-    $response = \LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatValidator::retrieveMessage($_POST['question'], $departmentId);
-    echo json_encode(['response' => erLhcoreClassBBCode::make_clickable($response)]);
+
+    try {
+        $response = \LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatValidator::retrieveMessage($_POST['question'], $departmentId);
+        echo json_encode(['response' => erLhcoreClassBBCode::make_clickable($response)]);
+    } catch (Exception $e) {
+        echo json_encode(['response' => $e->getMessage()]);
+    }
 }
 
 exit;

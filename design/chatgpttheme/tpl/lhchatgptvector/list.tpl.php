@@ -17,7 +17,7 @@
         <tbody>
         <?php foreach ($items['data'] as $item) : ?>
             <tr>
-                <td><a href="<?php echo erLhcoreClassDesign::baseurl('chatgptvector/view')?>/<?php echo htmlspecialchars($item['id']); ?>"><?php echo htmlspecialchars($item['name']); ?></a></td>
+                <td><a href="<?php echo erLhcoreClassDesign::baseurl('chatgptvector/view')?>/<?php echo htmlspecialchars($item['id']); ?>"><?php echo htmlspecialchars($item['name'] ?: '-'); ?></a></td>
                 <td><?php echo htmlspecialchars($item['id']); ?></td>
                 <td><?php echo date('Y-m-d H:i', $item['created_at']); ?></td>
                 <td><span class="badge bg-<?php echo $item['status'] == 'completed' ? 'success' : 'secondary'; ?>"><?php echo htmlspecialchars($item['status']); ?></span></td>
