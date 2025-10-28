@@ -1,6 +1,6 @@
 <h4><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','OpenAI');?></h4>
 
-<ul>
+<ul class="lhc-module">
     <li><a href="<?php echo erLhcoreClassDesign::baseurl('chatgpt/settings')?>"><span class="material-icons">settings</span><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','OpenAI Bot quick setup');?></a></li>
 
     <li><a href="<?php echo erLhcoreClassDesign::baseurl('chatgpt/settingssuggest')?>"><span class="material-icons">quiz</span><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','OpenAI Setting');?></a></li>

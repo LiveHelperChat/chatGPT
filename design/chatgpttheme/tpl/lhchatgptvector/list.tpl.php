@@ -1,7 +1,7 @@
 <h5>Available Vector Storages</h5>
 
 <?php if (!empty($items) && isset($items['data']) && !empty($items['data'])) : ?>
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover lhc-module">
         <thead>
         <tr>
             <th>Name</th>

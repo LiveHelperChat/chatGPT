@@ -15,7 +15,7 @@
     </script>
 <?php endif;?>
 
-<form action="" method="post" enctype="multipart/form-data" id="upload-form">
+<form action="" method="post" enctype="multipart/form-data" id="upload-form" class="lhc-module">
 
     <div class="form-group">
         <input type="file" name="files" />

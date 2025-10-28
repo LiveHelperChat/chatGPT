@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row lhc-module">
     <div class="col-12">
         <div class="card card-outline card-primary">
             <div class="card-header">
@@ -79,7 +79,7 @@
     </div>
 </div>
 
-<div class="row mt-2">
+<div class="row mt-2 lhc-module">
     <div class="col-12">
         <div class="card card-outline card-primary">
             <div class="card-header">
@@ -134,8 +134,7 @@
     </div>
 </div>
 
-
-<div class="row mt-2">
+<div class="row mt-2 lhc-module">
     <div class="col-12">
         <div class="card card-outline card-primary">
             <div class="card-header">

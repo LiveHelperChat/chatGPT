@@ -4,7 +4,7 @@
     <?php include(erLhcoreClassDesign::designtpl('lhkernel/validation_error.tpl.php'));?>
 <?php endif; ?>
 
-<form method="post" action="<?php echo erLhcoreClassDesign::baseurl('chatgptvector/new')?>">
+<form method="post" class="lhc-module" action="<?php echo erLhcoreClassDesign::baseurl('chatgptvector/new')?>">
 
     <?php include(erLhcoreClassDesign::designtpl('lhkernel/csfr_token.tpl.php'));?>
     

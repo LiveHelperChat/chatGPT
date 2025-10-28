@@ -1,6 +1,6 @@
 <h1><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Integration settings'); ?></h1>
 
-<form action="" method="post" ng-non-bindable>
+<form class="lhc-module" action="" method="post" ng-non-bindable>
 
     <?php include(erLhcoreClassDesign::designtpl('lhkernel/csfr_token.tpl.php'));?>
 

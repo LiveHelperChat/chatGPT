@@ -7,7 +7,7 @@ $modalBodyClass = 'p-1'
 
 <?php include(erLhcoreClassDesign::designtpl('lhkernel/modal_header.tpl.php'));?>
 
-    <div class="modal-body">
+    <div class="modal-body lhc-module">
 
         <?php if (isset($errors)) : ?>
             <?php include(erLhcoreClassDesign::designtpl('lhkernel/validation_error.tpl.php')); ?>

@@ -2,7 +2,7 @@
 
 <p><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','It will install Open AI bot based on Responses non-streaming version.')?></p>
 
-<form action="" method="post" ng-non-bindable>
+<form class="lhc-module" action="" method="post" ng-non-bindable>
 
     <?php include(erLhcoreClassDesign::designtpl('lhkernel/csfr_token.tpl.php'));?>
 
