@@ -28,22 +28,22 @@ class erLhcoreClassExtensionChatgpt
                 $this,
                 'loadInitialData'
             ));
-
-            $dispatcher->listen('instance.extensions_structure', array(
-                $this,
-                'checkStructure'
-            ));
-
-            $dispatcher->listen('instance.registered.created', array(
-                $this,
-                'instanceCreated'
-            ));
-
-            $dispatcher->listen('instance.destroyed', array(
-                $this,
-                'instanceDestroyed'
-            ));
         }
+
+        $dispatcher->listen('instance.extensions_structure', array(
+            $this,
+            'checkStructure'
+        ));
+
+        $dispatcher->listen('instance.registered.created', array(
+            $this,
+            'instanceCreated'
+        ));
+
+        $dispatcher->listen('instance.destroyed', array(
+            $this,
+            'instanceDestroyed'
+        ));
     }
 
     public function instanceDestroyed($params)
