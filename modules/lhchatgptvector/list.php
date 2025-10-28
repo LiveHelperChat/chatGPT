@@ -13,14 +13,14 @@ if (isset($_GET['doSearch'])) {
 $append = erLhcoreClassSearchHandler::getURLAppendFromInput($filterParams['input_form']);
 
 $pages = new lhPaginator();
-$pages->items_total = 100; \LiveHelperChatExtension\chatgpt\providers\erLhcoreClassModelChatGPTInvalid::getCount($filterParams['filter']);
+$pages->items_total = 100;
 $pages->translationContext = 'chat/pendingchats';
 $pages->serverURL = erLhcoreClassDesign::baseurl('lhchatgptvector/list').$append;
 $pages->paginate();
 $tpl->set('pages',$pages);
 
 if ($pages->items_total > 0) {
-    $items = \LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatVectorStorage::listStorages(['limit' => 100]); /*\LiveHelperChatExtension\chatgpt\providers\erLhcoreClassModelChatGPTInvalid::getList(array_merge($filterParams['filter'],array('limit' => $pages->items_per_page, 'offset' => $pages->low)));*/
+    $items = \LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatVectorStorage::listStorages(['limit' => 100]);
     $tpl->set('items',$items);
 }
 
