@@ -15,6 +15,7 @@ CREATE TABLE `lhc_chatgpt_crawl` (
                                      `max_pages` int(11) unsigned NOT NULL DEFAULT 0,
                                      `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
                                      `content` longtext NOT NULL DEFAULT '',
+                                     `lhc_file_id` bigint(20) unsigned NOT NULL DEFAULT 0,
                                      PRIMARY KEY (`id`),
                                      KEY `status_last_crawled_at` (`status`,`last_crawled_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
