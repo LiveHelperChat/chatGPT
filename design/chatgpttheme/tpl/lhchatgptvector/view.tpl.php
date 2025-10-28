@@ -139,7 +139,11 @@
     <div class="col-12">
         <div class="card card-outline card-primary">
             <div class="card-header">
-                <h3 class="card-title">Crawls/Content</h3>
+                <?php if (erLhcoreClassModule::getExtensionInstance('erLhcoreClassExtensionChatgpt')->settings['crawler'] === true) : ?>
+                    <h3 class="card-title">Crawls/Content</h3>
+                <?php else : ?>
+                    <h3 class="card-title">Content</h3>
+                <?php endif; ?>
             </div>
             <div class="card-body">
 
