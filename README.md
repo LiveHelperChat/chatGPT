@@ -12,6 +12,13 @@ Differences between those API - https://platform.openai.com/docs/guides/response
 * Completions API sample setup - https://doc.livehelperchat.com/docs/bot/chatgpt-integration
 * Assistant API is depreciated, but you can look at this sample - https://youtu.be/SEsOjmoKdrI
 
+## Notes
+
+* After creating vector storage, you might need to refresh a few times until vector storage appears. I don't control that.  
+* After the file is uploaded to vector storage, it's not used immediately show even open AI tells it was uploaded. You might need refresh a window.
+* If LCH does not allow to upload file, you might need to adjust chat configuration and allow to upload specific file type.
+* OpenAI does not start using files even they are uploaded and completed. By my experience, it can take about 10 minutes before they are started to be used in OpenAI calls.
+
 ## Requirements
 
 * Min 4.52v Live Helper Chat version.
