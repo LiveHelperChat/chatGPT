@@ -53,6 +53,12 @@ $ViewList['getanswer'] = array(
     'functions' => array('tab_suggester')
 );
 
+$ViewList['getanswerparams'] = array(
+    'params' => array(),
+    'uparams' => array(),
+    'functions' => array('configure')
+);
+
 $ViewList['delete'] = array(
     'params' => array('id'),
     'uparams' => array('csfr'),

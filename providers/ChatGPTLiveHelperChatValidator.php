@@ -5,8 +5,9 @@ namespace LiveHelperChatExtension\chatgpt\providers;
 class ChatGPTLiveHelperChatValidator {
 
     public static $requestLog = [];
+    public static $responseType = 'text';
 
-    public static function retrieveMessage($question, $department_id = 'default')
+    public static function retrieveMessage($question, $department_id = 'default', $options = [])
     {
         $sjOptions = \erLhcoreClassModelChatConfig::fetch('chatgpt_suggest');
         $data = (array)$sjOptions->data;
@@ -17,16 +18,21 @@ class ChatGPTLiveHelperChatValidator {
             throw new \Exception('OpenAI API key is not configured!');
         }
 
-        $vectorStorageData = json_decode($data['vstorage_id'],true);
-
-        if (is_array($vectorStorageData)) {
-            if (isset($vectorStorageData[$department_id])) {
-                $vectorStorageId = $vectorStorageData[$department_id];
-            } else {
-                $vectorStorageId = $vectorStorageData['default'];
-            }
+        // Use provided vector_storage_id or fall back to configuration
+        if (!empty($options['vector_storage_id'])) {
+            $vectorStorageId = $options['vector_storage_id'];
         } else {
-            $vectorStorageId = $data['vstorage_id'];
+            $vectorStorageData = json_decode($data['vstorage_id'],true);
+
+            if (is_array($vectorStorageData)) {
+                if (isset($vectorStorageData[$department_id])) {
+                    $vectorStorageId = $vectorStorageData[$department_id];
+                } else {
+                    $vectorStorageId = $vectorStorageData['default'];
+                }
+            } else {
+                $vectorStorageId = $data['vstorage_id'];
+            }
         }
 
         $model = !empty($data['model']) ? $data['model'] : 'gpt-4o-mini';
@@ -39,22 +45,44 @@ class ChatGPTLiveHelperChatValidator {
             $messages[] = ['role' => 'user', 'content' => $question];
         }
 
-        if (!empty($data['system_instructions'])) {
-            array_unshift($messages, ['role' => 'system', 'content' => $data['system_instructions']]);
+        // Use provided system_prompt or fall back to configuration
+        $systemPrompt = !empty($options['system_prompt']) ? $options['system_prompt'] : $data['system_instructions'];
+
+        if (!empty($systemPrompt)) {
+            array_unshift($messages, ['role' => 'system', 'content' => $systemPrompt]);
         }
 
-        $payload = json_encode([
+        // Build payload tools array
+        $tools = [];
+        
+        // Add file_search if vector storage ID is provided
+        if (!empty($vectorStorageId)) {
+            $tools[] = [
+                "type" => "file_search",
+                "vector_store_ids" => [$vectorStorageId]
+            ];
+        }
+
+        // Add custom functions if provided
+        if (!empty($options['llm_functions']) && is_array($options['llm_functions'])) {
+            foreach ($options['llm_functions'] as $function) {
+                $tools[] = $function;
+            }
+        }
+
+        $payloadData = [
             'model' => $model,
             "stream" => false,
             'input' => $messages,
-            'temperature' => 0.7,
-            'tools' => [
-                [
-                    "type" => "file_search",
-                    "vector_store_ids" => [$vectorStorageId]
-                ]
-            ]
-        ]);
+            'temperature' => 0.7
+        ];
+
+        // Only add tools if any are defined
+        if (!empty($tools)) {
+            $payloadData['tools'] = $tools;
+        }
+
+        $payload = json_encode($payloadData);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://api.openai.com/v1/responses');
@@ -80,27 +108,31 @@ class ChatGPTLiveHelperChatValidator {
         }
 
         if ($httpCode != 200) {
-            self::$requestLog[] = ['response' => $response, 'http_code' => $httpCode];
+            self::$requestLog[] = ['response' => $response, 'request' => json_decode($payload, true), 'http_code' => $httpCode];
             throw new \Exception('API Error: HTTP code ' . $httpCode . json_encode($payload));
         }
 
         $responseData = json_decode($response, true);
 
         if (!isset($responseData['output'][0])) {
-            self::$requestLog[] = ['response' => $responseData];
+            self::$requestLog[] = ['response' => $responseData, 'request' => json_decode($payload, true)];
             throw new \Exception('Invalid response format from OpenAI API' . json_encode($payload));
         }
 
         foreach ($responseData['output'] as $output) {
+            self::$requestLog[] = ['response' => $responseData, 'request' => json_decode($payload, true)];
             if ($output['type'] == 'message' && isset($output['content'][0]['text'])) {
                 return $output['content'][0]['text'];
+            } else if (!empty($options['debug_mode']) && $output['type'] == 'function_call') {
+               self::$responseType = 'function_call';
+               return json_encode($output,JSON_PRETTY_PRINT);
             }
         }
 
         return '';
     }
 
-    public static function getAnswer($question, $chat_id = 0)
+    public static function getAnswer($question, $chat_id = 0, $options = [])
     {
         $sjOptions = \erLhcoreClassModelChatConfig::fetch('chatgpt_suggest');
         $data = (array)$sjOptions->data;
@@ -116,7 +148,7 @@ class ChatGPTLiveHelperChatValidator {
                 $department_id = is_object($chat) ? $chat->dep_id : 0;
             }
 
-            $response['msg'] = self::retrieveMessage($question, $department_id);
+            $response['msg'] = self::retrieveMessage($question, $department_id, $options);
         } catch (\Exception $e) {
             $response['found'] = false;
             $response['error'] = $e->getMessage();
