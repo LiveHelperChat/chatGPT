@@ -73,16 +73,16 @@ if ($Params['user_parameters']['action'] == 'answer') {
         $response = \LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatValidator::retrieveMessage($messages, $departmentId, $options);
         
         if ($canOverride && isset($_POST['debug_mode']) && !empty($_POST['debug_mode'])) {
-            echo json_encode(['response' => (\LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatValidator::$responseType == 'text' ? erLhcoreClassBBCode::make_clickable($response) : $response), 'response_type' => \LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatValidator::$responseType, 'request_log' => \LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatValidator::$requestLog]);
+            echo json_encode(['response' => (\LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatValidator::$responseType == 'text' ? erLhcoreClassBBCode::make_clickable($response) : htmlspecialchars($response)), 'response_type' => \LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatValidator::$responseType, 'request_log' => \LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatValidator::$requestLog]);
         } else {
             echo json_encode(['response' => erLhcoreClassBBCode::make_clickable($response)]);
         }
 
     } catch (Exception $e) {
         if ($canOverride && isset($_POST['debug_mode']) && !empty($_POST['debug_mode'])) {
-            echo json_encode(['response' => $e->getMessage(), 'request_log' => \LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatValidator::$requestLog]);
+            echo json_encode(['response' => htmlspecialchars($e->getMessage()), 'request_log' => \LiveHelperChatExtension\chatgpt\providers\ChatGPTLiveHelperChatValidator::$requestLog]);
         } else {
-            echo json_encode(['response' => $e->getMessage()]);
+            echo json_encode(['response' => htmlspecialchars($e->getMessage())]);
         }
     }
 }

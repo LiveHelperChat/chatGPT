@@ -70,6 +70,11 @@
     </div>
 
     <div class="form-group">
+        <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Temperature'); ?></label>
+        <input type="text" name="temperature" placeholder="0.7" class="form-control form-control-sm" value="<?php echo htmlspecialchars($chatgpt_suggest['temperature'] ??  '')?>" />
+    </div>
+
+    <div class="form-group">
         <label><input type="checkbox" name="log_request" value="1" <?php if (isset($chatgpt_suggest['log_request']) && $chatgpt_suggest['log_request'] == 1) : ?>checked="checked"<?php endif;?> /> <?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Log request made to AI'); ?></label>
     </div>
 

@@ -69,13 +69,16 @@ class ChatGPTLiveHelperChatValidator {
                 $tools[] = $function;
             }
         }
-
+        
         $payloadData = [
             'model' => $model,
             "stream" => false,
-            'input' => $messages,
-            'temperature' => 0.7
+            'input' => $messages
         ];
+
+        if (!empty($data['temperature']) && is_numeric($data['temperature'])) {
+            $payloadData['temperature'] = (float)$data['temperature'];
+        }
 
         // Only add tools if any are defined
         if (!empty($tools)) {

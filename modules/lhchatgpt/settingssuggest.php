@@ -25,6 +25,9 @@ if (isset($_POST['StoreOptions'])) {
         'model' => new ezcInputFormDefinitionElement(
             ezcInputFormDefinitionElement::OPTIONAL, 'unsafe_raw'
         ),
+        'temperature' => new ezcInputFormDefinitionElement(
+            ezcInputFormDefinitionElement::OPTIONAL, 'float'
+        ),
         'limit_last' => new ezcInputFormDefinitionElement(
             ezcInputFormDefinitionElement::OPTIONAL, 'int'
         ),
@@ -58,6 +61,12 @@ if (isset($_POST['StoreOptions'])) {
         $data['vstorage_id'] = $form->vstorage_id;
     } else {
         $data['vstorage_id'] = '';
+    }
+
+    if ( $form->hasValidData( 'temperature' )) {
+        $data['temperature'] = (float)$form->temperature;
+    } else {
+        $data['temperature'] = '';
     }
 
     if ( $form->hasValidData( 'crawl_api_key' )) {

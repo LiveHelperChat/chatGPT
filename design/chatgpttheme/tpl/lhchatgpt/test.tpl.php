@@ -25,7 +25,7 @@
             <div class="form-group">
                 <label><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Message History');?></label>
                 <div id="message-history-container" class="border rounded p-2 mb-2" style="max-height: 300px; overflow-y: auto; background-color: #f8f9fa;">
-                    <small class="text-muted"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','No messages yet. Add messages below to build conversation history.');?></small>
+                    <small class="text-dark"><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','No messages yet. Add messages below to build conversation history.');?></small>
                 </div>
                 <div class="btn-group btn-group-sm mb-2" role="group">
                     <button type="button" class="btn btn-sm btn-outline-primary" id="add-user-message">
@@ -109,7 +109,7 @@
                 html += '<i class="material-icons me-2" style="font-size: 16px; color: ' + textColor + ';">' + icon + '</i>';
                 html += '<div class="flex-grow-1">';
                 html += '<strong style="color: ' + textColor + '; font-size: 12px;">' + roleLabel + '</strong>';
-                html += '<div class="mt-1" style="font-size: 13px; white-space: pre-wrap; word-wrap: break-word;">' + escapeHtml(msg.content) + '</div>';
+                html += '<div class="mt-1 text-dark" style="font-size: 13px; white-space: pre-wrap; word-wrap: break-word;">' + (msg.role === 'user' ? escapeHtml(msg.content) : msg.content) + '</div>';
                 html += '</div>';
                 html += '<button type="button" class="btn btn-sm btn-link text-danger p-0 ms-2" onclick="removeMessage(' + index + ')" style="line-height: 1;">';
                 html += '<i class="material-icons" style="font-size: 16px;">close</i>';

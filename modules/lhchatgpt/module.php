@@ -19,7 +19,7 @@ $ViewList['settingssuggest'] = array(
 $ViewList['index'] = array(
     'params' => array(),
     'uparams' => array(),
-    'functions' => array('configure'),
+    'functions' => array('access_index'),
 );
 
 $ViewList['suggest'] = array(
@@ -44,7 +44,7 @@ $ViewList['invalid'] = array(
 $ViewList['test'] = array(
     'params' => array(),
     'uparams' => array(),
-    'functions' => array('configure')
+    'functions' => array('test_ui')
 );
 
 $ViewList['getanswer'] = array(
@@ -56,7 +56,7 @@ $ViewList['getanswer'] = array(
 $ViewList['getanswerparams'] = array(
     'params' => array(),
     'uparams' => array(),
-    'functions' => array('configure')
+    'functions' => array('test_ui')
 );
 
 $ViewList['delete'] = array(
@@ -69,3 +69,5 @@ $FunctionList['manage_invalid'] = array('explain' => 'Allow operator to manage i
 $FunctionList['configure'] = array('explain' => 'Allow operator to configure ChatGPT');
 $FunctionList['auto_suggester'] = array('explain' => 'Enable auto suggester for the operator');
 $FunctionList['tab_suggester'] = array('explain' => 'Allow to use chat tab suggester in chat window');
+$FunctionList['test_ui'] = array('explain' => 'Allow to use ChatGPT test interface');
+$FunctionList['access_index'] = array('explain' => 'Allow access to ChatGPT module index');
