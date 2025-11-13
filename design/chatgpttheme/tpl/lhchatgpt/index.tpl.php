@@ -6,7 +6,7 @@
         <li><a href="<?php echo erLhcoreClassDesign::baseurl('chatgpt/settingssuggest')?>"><span class="material-icons">quiz</span><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','OpenAI Setting');?></a></li>
     <?php endif;?>
 
-    <?php if (erLhcoreClassUser::instance()->hasAccessTo('lhchatgpt','test_ui')) : ?>
+    <?php if (erLhcoreClassUser::instance()->hasAccessTo('lhchatgpt','test_ui') && erLhcoreClassUser::instance()->hasAccessTo('lhchatgpt','tab_suggester')) : ?>
         <li><a href="<?php echo erLhcoreClassDesign::baseurl('chatgpt/test')?>"><span class="material-icons">labs</span><?php echo erTranslationClassLhTranslation::getInstance()->getTranslation('chatgpt/module','Test UI');?></a></li>
     <?php endif;?>
 
